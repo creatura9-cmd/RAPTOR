@@ -6,6 +6,7 @@ use App\Http\Controllers\MarcaMotoController;
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\MotoController;
 use App\Http\Controllers\InventarioController;
+use App\Http\Controllers\MecanicoController;
 
 Route::get('/', [DashboardController::class, 'index'])
     ->name('dashboard.index');
@@ -25,5 +26,9 @@ Route::resource('moto', MotoController::class)
 Route::resource('inventario', InventarioController::class)
     ->except(['show'])
     ->names('inventario');
+
+Route::resource('mecanico', MecanicoController::class)
+    ->except(['show'])
+    ->names('mecanico');
 
 

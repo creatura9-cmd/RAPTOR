@@ -6,7 +6,7 @@ use App\Http\Requests\MotoRequest;
 use App\Models\Cliente;
 use App\Models\MarcaMoto;
 use App\Service\MotoService;
-use Illuminate\Http\Request;
+
 
 class MotoController extends Controller
 {
@@ -51,9 +51,9 @@ class MotoController extends Controller
         return view('Moto.update', compact('moto', 'clientes', 'marcas'));
     }
 
-    public function update(int $id, Request $request)
+    public function update(MotoRequest $request, int $id)
     {
-        $this->moto_service->update($id, $request->all());
+        $this->moto_service->update($id, $request->validated());
 
         return redirect()
             ->route('moto.index')

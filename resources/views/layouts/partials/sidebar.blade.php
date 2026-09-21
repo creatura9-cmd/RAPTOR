@@ -29,6 +29,7 @@
                     ['label' => 'Marcas Moto', 'route' => 'marca_moto.index',   'icon' => 'shield'],
                     ['label' => 'Inventarios',  'route' => 'inventario.index', 'icon' => 'clipboard'],
                     ['label' => 'Motos',   'route' => 'moto.index',   'icon' => 'box'],
+                     ['label' => 'Mecanico', 'route' => 'mecanico.index',   'icon' => 'users'],
                     ['label' => 'Reportes',    'route' => 'reports.index',    'icon' => 'chart'],
                     ['label' => 'Configuración', 'route' => 'settings.index', 'icon' => 'cog'],
                     ['label' => 'Clientes', 'route' => 'cliente.index', 'icon' => 'users'],

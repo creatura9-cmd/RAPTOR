@@ -9,13 +9,13 @@
         <div class="flex justify-between items-center mb-6"> 
  
             <h2 class="text-2xl font-bold text-gray-700"> 
-                Listado de Marcas de Moto 
+                Listado de Mecánicos 
             </h2> 
  
-            <a href="{{ route('marca_moto.create') }}" 
+            <a href="{{ route('mecanico.create') }}" 
                class="rounded-lg bg-primary-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-primary-700 transition"> 
  
-                Nueva Marca 
+                Nuevo Mecánico 
  
             </a> 
  
@@ -62,7 +62,31 @@
                     </th> 
  
                     <th class="border px-4 py-2"> 
-                        Nombre Marca 
+                        Nombre 
+                    </th> 
+ 
+                    <th class="border px-4 py-2"> 
+                        Apellido 
+                    </th> 
+ 
+                    <th class="border px-4 py-2"> 
+                        Tipo Documento 
+                    </th> 
+ 
+                    <th class="border px-4 py-2"> 
+                        Número Documento 
+                    </th> 
+ 
+                    <th class="border px-4 py-2"> 
+                        Teléfono 
+                    </th> 
+ 
+                    <th class="border px-4 py-2"> 
+                        Correo Electrónico 
+                    </th> 
+ 
+                    <th class="border px-4 py-2"> 
+                        Especialidad 
                     </th> 
  
                     <th class="border px-4 py-2"> 
@@ -75,23 +99,47 @@
  
             <tbody> 
  
-                @foreach ($marcas as $marca) 
+                @foreach ($mecanicos as $mecanico) 
  
                     <tr class="text-center hover:bg-gray-50"> 
  
                         <td class="border px-4 py-2"> 
-                            {{ $marca->id }} 
+                            {{ $mecanico->id_mecanico }} 
                         </td> 
  
                         <td class="border px-4 py-2"> 
-                            {{ $marca->nombre_marca }} 
+                            {{ $mecanico->nombre }} 
+                        </td> 
+ 
+                        <td class="border px-4 py-2"> 
+                            {{ $mecanico->apellido }} 
+                        </td> 
+ 
+                        <td class="border px-4 py-2"> 
+                            {{ $mecanico->tipo_documento }} 
+                        </td> 
+ 
+                        <td class="border px-4 py-2"> 
+                            {{ $mecanico->numero_documento }} 
+                        </td> 
+ 
+                        <td class="border px-4 py-2"> 
+                            {{ $mecanico->telefono }} 
+                        </td> 
+ 
+                        <td class="border px-4 py-2"> 
+                            {{ $mecanico->correo_electronico }} 
+                        </td> 
+ 
+                        <td class="border px-4 py-2"> 
+                            {{ $mecanico->especialidad }} 
                         </td> 
  
                         <td class="border px-4 py-2">
                             <div class="flex items-center justify-center gap-3">
 
                                 <!-- Botón Editar -->
-                                <a href="{{ route('marca_moto.edit', $marca->id) }}"
+                                <a href="{{ route('mecanico.edit', $mecanico->id_mecanico) }}"
                                    class="text-blue-600 hover:text-blue-900 p-1"
                                    title="Editar">
 
@@ -111,9 +159,9 @@
                                 </a>
 
                                 <!-- Botón Eliminar -->
-                                <form action="{{ route('marca_moto.destroy', $marca->id) }}"
+                                <form action="{{ route('mecanico.destroy', $mecanico->id_mecanico) }}"
                                       method="POST"
-                                      onsubmit="return confirm('¿Está seguro de eliminar esta marca?');">
+                                      onsubmit="return confirm('¿Está seguro de eliminar este mecánico?');">
 
                                     @csrf
                                     @method('DELETE')
@@ -146,14 +194,14 @@
  
                 @endforeach 
  
-                @if ($marcas->isEmpty()) 
+                @if ($mecanicos->isEmpty()) 
  
                     <tr> 
  
-                        <td colspan="3" 
+                        <td colspan="9" 
                             class="border px-4 py-6 text-center text-gray-500"> 
  
-                            No hay marcas registradas. 
+                            No hay mecánicos registrados. 
  
                         </td> 
  
@@ -170,5 +218,3 @@
 </div> 
  
 @endsection
-
-

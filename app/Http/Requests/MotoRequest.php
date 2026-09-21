@@ -44,7 +44,7 @@ class MotoRequest extends FormRequest
                 'required',
                 'string',
                 'max:20',
-                Rule::unique('moto', 'placa')->ignore($this->route('id')),
+                Rule::unique('moto', 'placa')->ignore($this->route('moto')),
             ],
         ];
     }
