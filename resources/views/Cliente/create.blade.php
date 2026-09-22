@@ -11,10 +11,6 @@
         <h1 class="text-2xl font-bold text-slate-800">
             Nuevo Cliente
         </h1>
-
-        <p class="mt-1 text-sm text-slate-500">
-            Registra un nuevo cliente en RAPTOR.
-        </p>
     </div>
 
     {{-- Formulario --}}

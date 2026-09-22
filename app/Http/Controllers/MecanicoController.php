@@ -1,13 +1,13 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Service\MecanicoService;
-use Illuminate\Http\Request;
+
 use App\Http\Requests\MecanicoRequest;
+use App\Service\MecanicoService;
 
 class MecanicoController extends Controller
 {
-     protected $mecanicoService;
+    protected $mecanicoService;
 
     public function __construct(MecanicoService $mecanicoService)
     {
@@ -28,14 +28,16 @@ class MecanicoController extends Controller
 
     public function store(MecanicoRequest $request)
     {
-        $datos = request->validated();
+        $datos = $request->validated();
 
         $this->mecanicoService->store($datos);
 
-        return redirect()->route('mecanico.index');
+        return redirect()
+            ->route('mecanico.index')
+            ->with('success', 'Mecánico registrado correctamente');
     }
 
-     public function edit(int $id)
+    public function edit(int $id)
     {
         $mecanico = $this->mecanicoService->edit($id);
 
@@ -48,13 +50,17 @@ class MecanicoController extends Controller
 
         $this->mecanicoService->update($id, $datos);
 
-        return redirect()->route('mecanico.index');
+        return redirect()
+            ->route('mecanico.index')
+            ->with('update', 'Mecánico actualizado correctamente');
     }
 
-     public function destroy(int $id)
+    public function destroy(int $id)
     {
         $this->mecanicoService->destroy($id);
 
-        return redirect()->route('mecanico.index');
+        return redirect()
+            ->route('mecanico.index')
+            ->with('destroy', 'Mecánico eliminado correctamente');
     }
 }

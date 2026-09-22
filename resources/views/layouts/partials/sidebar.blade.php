@@ -26,13 +26,15 @@
                 $links = [
                     ['label' => 'Dashboard',   'route' => 'dashboard.index',  'icon' => 'home'],
                     ['label' => 'Usuarios',    'route' => 'users.index',      'icon' => 'users'],
-                    ['label' => 'Marcas Moto', 'route' => 'marca_moto.index',   'icon' => 'shield'],
-                    ['label' => 'Inventarios',  'route' => 'inventario.index', 'icon' => 'clipboard'],
-                    ['label' => 'Motos',   'route' => 'moto.index',   'icon' => 'box'],
-                     ['label' => 'Mecanico', 'route' => 'mecanico.index',   'icon' => 'users'],
                     ['label' => 'Reportes',    'route' => 'reports.index',    'icon' => 'chart'],
                     ['label' => 'Configuración', 'route' => 'settings.index', 'icon' => 'cog'],
+                    ['label' => 'Marcas Moto', 'route' => 'marca_moto.index',   'icon' => 'shield'],
+                    ['label' => 'Motos',   'route' => 'moto.index',   'icon' => 'box'],
+                    ['label' => 'Mecanicos', 'route' => 'mecanico.index',   'icon' => 'users'],
+                    ['label' => 'Inventarios',  'route' => 'inventario.index', 'icon' => 'clipboard'],
                     ['label' => 'Clientes', 'route' => 'cliente.index', 'icon' => 'users'],
+                    ['label' => 'Repuestos', 'route' => 'repuesto.index', 'icon' => 'box'],
+                    ['label' => 'Diagnosticos', 'route' => 'diagnostico.index', 'icon' => 'box'],
                 ];
             @endphp
 

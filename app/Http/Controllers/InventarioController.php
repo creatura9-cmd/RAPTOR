@@ -26,7 +26,7 @@ class InventarioController extends Controller
     public function create()
     {
         $motos = Moto::with(['cliente', 'marca'])
-            ->orderBy('placa')
+            ->orderBy('placa') 
             ->get();
 
         return view('Inventario.create', compact('motos'));

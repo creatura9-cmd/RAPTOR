@@ -7,6 +7,9 @@ use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\MotoController;
 use App\Http\Controllers\InventarioController;
 use App\Http\Controllers\MecanicoController;
+use App\Http\Controllers\RepuestoController;
+use App\Http\Controllers\DiagnosticoController;
+
 
 Route::get('/', [DashboardController::class, 'index'])
     ->name('dashboard.index');
@@ -30,5 +33,14 @@ Route::resource('inventario', InventarioController::class)
 Route::resource('mecanico', MecanicoController::class)
     ->except(['show'])
     ->names('mecanico');
+
+Route::resource('repuesto', RepuestoController::class)
+    ->except(['show'])
+    ->names('repuesto');
+
+Route::resource('diagnostico', DiagnosticoController::class)
+    ->except(['show'])
+    ->names('diagnostico');
+
 
 
