@@ -1,8 +1,8 @@
 <?php
 
 namespace App\Repository;
-
 use App\Models\Moto;
+use Illuminate\Database\QueryException;
 
 class MotoRepository
 {
@@ -28,8 +28,21 @@ class MotoRepository
         $moto->update($datos);
     }
 
-    public function destroy(int $id)
+    public function destroy(int $id): bool
     {
-        Moto::destroy($id);
+        $moto = Moto::findOrFail($id);
+
+        try {
+            $moto->delete();
+
+            return true;
+        } catch (QueryException $e) {
+            if (str_contains($e->getMessage(), 'FOREIGN KEY constraint failed')) {
+                return false;
+            }
+
+            throw $e;
+        }
     }
+
 }

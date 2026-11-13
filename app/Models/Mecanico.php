@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+
 
 class Mecanico extends Model
 {
@@ -19,4 +21,13 @@ class Mecanico extends Model
         'correo_electronico',
         'especialidad',
     ];
+
+    public function ordenesTrabajo(): HasMany
+    {
+        return $this->hasMany(
+            OrdenTrabajo::class,
+            'id_mecanico',
+            'id_mecanico'
+        );
+    }
 }

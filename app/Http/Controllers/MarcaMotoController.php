@@ -18,7 +18,7 @@ class MarcaMotoController extends Controller
     public function index()
     {
         $marcas = $this->marca_moto_service->listartodo();
-        
+
         return view('MarcaMoto.index', compact('marcas'));
     }
 
@@ -54,7 +54,13 @@ class MarcaMotoController extends Controller
 
     public function destroy(int $id)
     {
-        $this->marca_moto_service->destroy($id);
+        $eliminada = $this->marca_moto_service->destroy($id);
+
+        if (!$eliminada) {
+            return redirect()
+                ->route('marca_moto.index')
+                ->with('destroy', 'No se puede eliminar la marca porque está asociada a una o más motos.');
+        }
 
         return redirect()
             ->route('marca_moto.index')

@@ -35,6 +35,6 @@ class MotoService
 
     public function destroy(int $id)
     {
-        $this->moto_repository->destroy($id);
+        return $this->moto_repository->destroy($id);
     }
 }

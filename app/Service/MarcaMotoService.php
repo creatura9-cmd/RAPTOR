@@ -35,6 +35,6 @@ class MarcaMotoService
 
     public function destroy(int $id)
     {
-        $this->marca_moto_repository->destroy($id);
+        return $this->marca_moto_repository->destroy($id);
     }
 }

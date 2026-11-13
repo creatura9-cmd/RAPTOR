@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Models\Mecanico;
+use Illuminate\Validation\ValidationException;
 
 class MecanicoRepository
 {
@@ -26,10 +27,18 @@ class MecanicoRepository
         $mecanico = Mecanico::findOrFail($id);
 
         $mecanico->update($datos);
-    }
 
+    }
     public function destroy(int $id)
     {
-        Mecanico::destroy($id);
+            $mecanico = Mecanico::findOrFail($id);
+
+            if ($mecanico->ordenesTrabajo()->exists()) {
+                throw ValidationException::withMessages([
+                    'mecanico' => 'No se puede eliminar este mecánico porque tiene órdenes de trabajo relacionadas.',
+                ]);
+            }
+
+           $mecanico->delete();
     }
 }

@@ -18,16 +18,16 @@ class Moto extends Model
 
     public function marca()
     {
-        return $this->belongsTo(MarcaMoto::class, 'id_marca');
+        return $this->belongsTo(MarcaMoto::class, 'id_marca', 'id');
     }
 
     public function cliente()
     {
-        return $this->belongsTo(Cliente::class, 'id_cliente');
+        return $this->belongsTo(Cliente::class, 'id_cliente', 'id');
     }
 
     public function inventarios()
     {
-       return $this->hasMany(Inventario::class, 'id_moto');
+       return $this->hasMany(Inventario::class, 'id_moto', 'id');
     }
 }

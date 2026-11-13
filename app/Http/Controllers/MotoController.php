@@ -62,11 +62,17 @@ class MotoController extends Controller
 
     public function destroy(int $id)
     {
-        $this->moto_service->destroy($id);
+        $eliminada = $this->moto_service->destroy($id);
 
-        return redirect()
+        if (! $eliminada) {
+            return redirect()
             ->route('moto.index')
-            ->with('destroy', 'Moto eliminada correctamente');
+            ->with('error', 'No se puede eliminar esta motocicleta porque tiene registros relacionados en RAPTOR.');
+    }
+
+    return redirect()
+        ->route('moto.index')
+        ->with('destroy', 'Moto eliminada correctamente.');
     }
 }
 

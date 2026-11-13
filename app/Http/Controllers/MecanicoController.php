@@ -57,7 +57,13 @@ class MecanicoController extends Controller
 
     public function destroy(int $id)
     {
-        $this->mecanicoService->destroy($id);
+        try {
+            $this->mecanicoService->destroy($id);
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return redirect()
+            ->route('mecanico.index')
+            ->withErrors($e->errors());
+        }
 
         return redirect()
             ->route('mecanico.index')
