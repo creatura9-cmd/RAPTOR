@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Cliente extends Model
 {
@@ -22,4 +23,9 @@ class Cliente extends Model
     {
         return $this->hasMany(Moto::class, 'id_cliente');
     }
+
+    public function usuarioPortal(): HasOne
+    {
+        return $this->hasOne(User::class, 'id_cliente', 'id');
+    }   
 }

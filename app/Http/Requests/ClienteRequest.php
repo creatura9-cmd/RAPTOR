@@ -24,7 +24,9 @@ class ClienteRequest extends FormRequest
                 'required',
                 'string',
                 'max:50',
-                'unique:cliente,numero_documento,NULL,id,tipo_documento,' . $this->tipo_documento,
+                \Illuminate\Validation\Rule::unique('cliente', 'numero_documento')
+                    ->where('tipo_documento', $this->tipo_documento)
+                    ->ignore($this->route('cliente')),
             ],
 
             'telefono' => 'nullable|string|max:20',

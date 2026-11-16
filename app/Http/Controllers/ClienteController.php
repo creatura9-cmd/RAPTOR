@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ClienteRequest;
 use App\Service\ClienteService;
-use Illuminate\Http\Request;
+use Illuminate\Database\QueryException;
 
 class ClienteController extends Controller
 {
@@ -43,21 +43,71 @@ class ClienteController extends Controller
         return view('Cliente.update', compact('cliente'));
     }
 
-    public function update(int $id, Request $request)
+    public function update(int $id, ClienteRequest $request)
     {
-        $this->cliente_service->update($id, $request->all());
+        $this->cliente_service->update($id, $request->validated());
 
         return redirect()
             ->route('cliente.index')
             ->with('update', 'Cliente actualizado correctamente');
     }
 
-    public function destroy(int $id)
+    
+    public function habilitarPortal(int $id)
     {
-        $this->cliente_service->destroy($id);
+        $resultado = $this->cliente_service->habilitarPortal($id);
+
+        if (isset($resultado['error'])) {
+            return redirect()
+                ->route('cliente.index')
+                ->with('error', $resultado['error']);
+        }
 
         return redirect()
             ->route('cliente.index')
-            ->with('destroy', 'Cliente eliminado correctamente');
+            ->with('success', $resultado['success'])
+            ->with('enlace_invitacion', $resultado['enlace']);
+    }
+
+    public function reenviarInvitacion(int $id)
+    {
+        $resultado = $this->cliente_service->reenviarInvitacion($id);
+
+        if (isset($resultado['error'])) {
+            return redirect()
+                ->route('cliente.index')
+                ->with('error', $resultado['error']);
+        }
+
+        return redirect()
+            ->route('cliente.index')
+            ->with('success', $resultado['success'])
+            ->with('enlace_invitacion', $resultado['enlace']);
+    }
+
+
+    public function destroy(int $id)
+    {
+        try {
+            $this->cliente_service->destroy($id);
+
+            return redirect()
+                ->route('cliente.index')
+                ->with('destroy', 'Cliente eliminado correctamente');
+
+        } catch (QueryException $e) {
+
+            // Solo manejar errores de integridad referencial.
+            if ($e->getCode() !== '23000') {
+                throw $e;
+            }
+
+            return redirect()
+                ->route('cliente.index')
+                ->with(
+                    'error',
+                    'No se puede eliminar este cliente porque tiene registros relacionados en el sistema.'
+                );
+        }
     }
 }
