@@ -170,23 +170,6 @@
         background: linear-gradient(180deg, rgb(8 31 47 / 96%) 0%, rgb(8 31 47 / 82%) 45%, rgb(8 31 47 / 55%) 100%);
     }
 
-    #portal-cliente .portal-aside::before,
-    #portal-cliente .portal-aside::after {
-        content: "";
-        position: absolute;
-        z-index: -1;
-        top: -5%;
-        bottom: -5%;
-        background: var(--yellow);
-        transform: skewX(-28deg);
-    }
-
-    #portal-cliente .portal-aside::before {
-        right: 6%;
-        width: 11%;
-        opacity: .35;
-    }
-
     #portal-cliente .portal-aside::after {
         right: 22%;
         width: 34%;

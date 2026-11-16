@@ -25,3 +25,7 @@ _ide_helper.php
 Homestead.json
 Homestead.yaml
 Thumbs.db
+
+# Archivos de revisión locales
+/raptor-revision-pdf.zip
+/raptor-revision-pdf-relaciones.zip

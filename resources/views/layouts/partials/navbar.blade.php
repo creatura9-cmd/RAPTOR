@@ -11,10 +11,6 @@
             >
                 <span class="w-6 h-6 block">@include('layouts.partials.icons', ['icon' => 'menu'])</span>
             </button>
-
-            <h1 class="text-lg sm:text-xl font-semibold text-slate-800 truncate">
-                @yield('page-title', 'Dashboard')
-            </h1>
         </div>
 
         <div class="flex items-center gap-2 sm:gap-4">
