@@ -3,9 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\InventarioRequest;
-use App\Models\Moto;
 use App\Service\InventarioService;
-use Illuminate\Http\Request;
 
 class InventarioController extends Controller
 {
@@ -25,11 +23,10 @@ class InventarioController extends Controller
 
     public function create()
     {
-        $motos = Moto::with(['cliente', 'marca'])
-            ->orderBy('placa') 
-            ->get();
+        $motos = $this->inventario_service->listarMotos();
+        $mecanicos = $this->inventario_service->listarMecanicos();
 
-        return view('Inventario.create', compact('motos'));
+        return view('Inventario.create', compact('motos', 'mecanicos'));
     }
 
     public function store(InventarioRequest $request)
@@ -45,11 +42,13 @@ class InventarioController extends Controller
     {
         $inventario = $this->inventario_service->edit($id);
 
-        $motos = Moto::with(['cliente', 'marca'])
-            ->orderBy('placa')
-            ->get();
+        $motos = $this->inventario_service->listarMotos();
+        $mecanicos = $this->inventario_service->listarMecanicos();
 
-        return view('Inventario.update', compact('inventario', 'motos'));
+        return view(
+            'Inventario.update',
+            compact('inventario', 'motos', 'mecanicos')
+        );
     }
 
     public function update(int $id, InventarioRequest $request)

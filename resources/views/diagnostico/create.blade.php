@@ -4,236 +4,232 @@
 
 <div class="container mx-auto mt-10">
 
-<div class="bg-white shadow-lg rounded-lg p-6 max-w-2xl mx-auto">
+    <div class="bg-white shadow-lg rounded-lg p-6 max-w-2xl mx-auto">
 
-<div class="mb-6">
+        <div class="mb-6">
 
+            <h2 class="text-2xl font-bold text-gray-700">
+                Nuevo Diagnóstico
+            </h2>
 
-<h2 class="text-2xl font-bold text-gray-700">
-    Nuevo Diagnóstico
-</h2>
+        </div>
 
+        <form action="{{ route('diagnostico.store') }}" method="POST">
 
-</div>
+            @csrf
 
-<form action="{{ route('diagnostico.store') }}" method="POST">
+            {{-- Recepción --}}
+            <div class="mb-4">
 
+                <label for="id_inventario"
+                       class="block text-sm font-medium text-gray-700 mb-1">
 
-@csrf
+                    Recepción
 
-{{-- Inventario --}}
-<div class="mb-4">
+                </label>
 
-    <label for="id_inventario"
-           class="block text-sm font-medium text-gray-700 mb-1">
+                <select name="id_inventario"
+                        id="id_inventario"
+                        class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-primary-500 focus:border-primary-500"
+                        required>
 
-        Inventario
+                    <option value="">
+                        Seleccione una recepción
+                    </option>
 
-    </label>
+                    @foreach ($inventarios as $inventario)
 
-    <select name="id_inventario"
-            id="id_inventario"
-            class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-primary-500 focus:border-primary-500"
-            required>
+                        <option value="{{ $inventario->id }}"
+                            {{ old('id_inventario') == $inventario->id ? 'selected' : '' }}>
 
-        <option value="">
-            Seleccione un inventario
-        </option>
+                            {{ 'RECEPCIÓN # ' . str_pad($inventario->recepcion, 3, '0', STR_PAD_LEFT) }}
+                            - Moto: {{ $inventario->moto->placa ?? 'Sin placa' }}
 
-        @foreach ($inventarios as $inventario)
+                        </option>
 
-            <option value="{{ $inventario->id }}"
-                {{ old('id_inventario') == $inventario->id ? 'selected' : '' }}>
+                    @endforeach
 
-                Inventario #{{ $inventario->id }}
-                -
-                Moto: {{ $inventario->moto->placa ?? 'Sin placa' }}
+                </select>
 
-            </option>
+                @error('id_inventario')
 
-        @endforeach
+                    <p class="text-red-600 text-sm mt-1">
+                        {{ $message }}
+                    </p>
 
-    </select>
+                @enderror
 
-    @error('id_inventario')
+            </div>
 
-        <p class="text-red-600 text-sm mt-1">
-            {{ $message }}
-        </p>
+            {{-- Mecánico --}}
+            <div class="mb-4">
 
-    @enderror
+                <label for="id_mecanico"
+                       class="block text-sm font-medium text-gray-700 mb-1">
 
-</div>
+                    Mecánico
 
-{{-- Mecánico --}}
-<div class="mb-4">
+                </label>
 
-    <label for="id_mecanico"
-           class="block text-sm font-medium text-gray-700 mb-1">
+                <select name="id_mecanico"
+                        id="id_mecanico"
+                        class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-primary-500 focus:border-primary-500"
+                        required>
 
-        Mecánico
+                    <option value="">
+                        Seleccione un mecánico
+                    </option>
 
-    </label>
+                    @foreach ($mecanicos as $mecanico)
 
-    <select name="id_mecanico"
-            id="id_mecanico"
-            class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-primary-500 focus:border-primary-500"
-            required>
+                        <option value="{{ $mecanico->id_mecanico }}"
+                            {{ old('id_mecanico') == $mecanico->id_mecanico ? 'selected' : '' }}>
 
-        <option value="">
-            Seleccione un mecánico
-        </option>
+                            {{ $mecanico->nombre }}
+                            {{ $mecanico->apellido }}
 
-        @foreach ($mecanicos as $mecanico)
+                        </option>
 
-            <option value="{{ $mecanico->id_mecanico }}"
-                {{ old('id_mecanico') == $mecanico->id_mecanico ? 'selected' : '' }}>
+                    @endforeach
 
-                {{ $mecanico->nombre }}
-                {{ $mecanico->apellido }}
+                </select>
 
-            </option>
+                @error('id_mecanico')
 
-        @endforeach
+                    <p class="text-red-600 text-sm mt-1">
+                        {{ $message }}
+                    </p>
 
-    </select>
+                @enderror
 
-    @error('id_mecanico')
+            </div>
 
-        <p class="text-red-600 text-sm mt-1">
-            {{ $message }}
-        </p>
+            {{-- Descripción --}}
+            <div class="mb-4">
 
-    @enderror
+                <label for="descripcion"
+                       class="block text-sm font-medium text-gray-700 mb-1">
 
-</div>
+                    Descripción del diagnóstico
 
-{{-- Descripción --}}
-<div class="mb-4">
+                </label>
 
-    <label for="descripcion"
-           class="block text-sm font-medium text-gray-700 mb-1">
+                <textarea name="descripcion"
+                          id="descripcion"
+                          rows="4"
+                          class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-primary-500 focus:border-primary-500"
+                          required>{{ old('descripcion') }}</textarea>
 
-        Descripción del diagnóstico
+                @error('descripcion')
 
-    </label>
+                    <p class="text-red-600 text-sm mt-1">
+                        {{ $message }}
+                    </p>
 
-    <textarea name="descripcion"
-              id="descripcion"
-              rows="4"
-              class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-primary-500 focus:border-primary-500"
-              required>{{ old('descripcion') }}</textarea>
+                @enderror
 
-    @error('descripcion')
+            </div>
 
-        <p class="text-red-600 text-sm mt-1">
-            {{ $message }}
-        </p>
+            {{-- Fecha --}}
+            <div class="mb-4">
 
-    @enderror
+                <label for="fecha_diagnostico"
+                       class="block text-sm font-medium text-gray-700 mb-1">
 
-</div>
+                    Fecha del diagnóstico
 
-{{-- Fecha --}}
-<div class="mb-4">
+                </label>
 
-    <label for="fecha_diagnostico"
-           class="block text-sm font-medium text-gray-700 mb-1">
+                <input type="date"
+                       name="fecha_diagnostico"
+                       id="fecha_diagnostico"
+                       value="{{ old('fecha_diagnostico', date('Y-m-d')) }}"
+                       class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-primary-500 focus:border-primary-500"
+                       required>
 
-        Fecha del diagnóstico
+                @error('fecha_diagnostico')
 
-    </label>
+                    <p class="text-red-600 text-sm mt-1">
+                        {{ $message }}
+                    </p>
 
-    <input type="date"
-           name="fecha_diagnostico"
-           id="fecha_diagnostico"
-           value="{{ old('fecha_diagnostico', date('Y-m-d')) }}"
-           class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-primary-500 focus:border-primary-500"
-           required>
+                @enderror
 
-    @error('fecha_diagnostico')
+            </div>
 
-        <p class="text-red-600 text-sm mt-1">
-            {{ $message }}
-        </p>
+            {{-- Estado --}}
+            <div class="mb-6">
 
-    @enderror
+                <label for="estado"
+                       class="block text-sm font-medium text-gray-700 mb-1">
 
-</div>
+                    Estado
 
-{{-- Estado --}}
-<div class="mb-6">
+                </label>
 
-    <label for="estado"
-           class="block text-sm font-medium text-gray-700 mb-1">
+                <select name="estado"
+                        id="estado"
+                        class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-primary-500 focus:border-primary-500"
+                        required>
 
-        Estado
+                    <option value="">
+                        Seleccione un estado
+                    </option>
 
-    </label>
+                    <option value="pendiente"
+                        {{ old('estado') == 'pendiente' ? 'selected' : '' }}>
+                        Pendiente
+                    </option>
 
-    <select name="estado"
-            id="estado"
-            class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-primary-500 focus:border-primary-500"
-            required>
+                    <option value="en_proceso"
+                        {{ old('estado') == 'en_proceso' ? 'selected' : '' }}>
+                        En proceso
+                    </option>
 
-        <option value="">
-            Seleccione un estado
-        </option>
+                    <option value="finalizado"
+                        {{ old('estado') == 'finalizado' ? 'selected' : '' }}>
+                        Finalizado
+                    </option>
 
-        <option value="pendiente"
-            {{ old('estado') == 'pendiente' ? 'selected' : '' }}>
-            Pendiente
-        </option>
+                    <option value="cancelado"
+                        {{ old('estado') == 'cancelado' ? 'selected' : '' }}>
+                        Cancelado
+                    </option>
 
-        <option value="en_proceso"
-            {{ old('estado') == 'en_proceso' ? 'selected' : '' }}>
-            En proceso
-        </option>
+                </select>
 
-        <option value="finalizado"
-            {{ old('estado') == 'finalizado' ? 'selected' : '' }}>
-            Finalizado
-        </option>
+                @error('estado')
 
-        <option value="cancelado"
-            {{ old('estado') == 'cancelado' ? 'selected' : '' }}>
-            Cancelado
-        </option>
+                    <p class="text-red-600 text-sm mt-1">
+                        {{ $message }}
+                    </p>
 
-    </select>
+                @enderror
 
-    @error('estado')
+            </div>
 
-        <p class="text-red-600 text-sm mt-1">
-            {{ $message }}
-        </p>
+            {{-- Botones --}}
+            <div class="flex items-center justify-end gap-3">
 
-    @enderror
+                <button type="submit"
+                        class="rounded-lg bg-primary-600 px-5 py-2.5 text-sm font-semibold text-white hover:bg-primary-700 transition">
 
-</div>
+                    Guardar
 
-{{-- Botones --}}
-<div class="flex items-center gap-3">
+                </button>
 
-    <button type="submit"
-            class="rounded-lg bg-primary-600 px-5 py-2.5 text-sm font-semibold text-white hover:bg-primary-700 transition">
+                <a href="{{ route('diagnostico.index') }}"
+                   class="rounded-lg bg-gray-200 px-5 py-2.5 text-sm font-semibold text-gray-700 hover:bg-gray-300 transition">
 
-        Guardar
+                    Cancelar
 
-    </button>
+                </a>
 
-    <a href="{{ route('diagnostico.index') }}"
-       class="rounded-lg bg-gray-200 px-5 py-2.5 text-sm font-semibold text-gray-700 hover:bg-gray-300 transition">
+            </div>
 
-        Cancelar
+        </form>
 
-    </a>
-
-</div>
-
-</form>
-
-</div>
+    </div>
 
 </div>
 

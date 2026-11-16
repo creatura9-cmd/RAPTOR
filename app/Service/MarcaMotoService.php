@@ -33,8 +33,14 @@ class MarcaMotoService
         $this->marca_moto_repository->update($id, $datos);
     }
 
-    public function destroy(int $id)
+    public function destroy(int $id): bool
     {
-        return $this->marca_moto_repository->destroy($id);
+        if ($this->marca_moto_repository->existeMotoAsociada($id)) {
+            return false;
+        }
+
+        $this->marca_moto_repository->destroy($id);
+
+        return true;
     }
 }

@@ -3,8 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\DiagnosticoRequest;
-use App\Models\Inventario;
-use App\Models\Mecanico;
 use App\Service\DiagnosticoService;
 
 class DiagnosticoController extends Controller
@@ -25,8 +23,8 @@ class DiagnosticoController extends Controller
 
     public function create()
     {
-        $inventarios = Inventario::with('moto')->get();
-        $mecanicos = Mecanico::all();
+        $inventarios = $this->diagnosticoService->inventariosDisponibles();
+        $mecanicos = $this->diagnosticoService->mecanicos();
 
         return view('diagnostico.create', compact('inventarios', 'mecanicos'));
     }
@@ -46,8 +44,11 @@ class DiagnosticoController extends Controller
     {
         $diagnostico = $this->diagnosticoService->edit($id);
 
-        $inventarios = Inventario::with('moto')->get();
-        $mecanicos = Mecanico::all();
+        $inventarios = $this->diagnosticoService->inventarioPorId(
+            $diagnostico->id_inventario
+        );
+
+        $mecanicos = $this->diagnosticoService->mecanicos();
 
         return view(
             'diagnostico.update',

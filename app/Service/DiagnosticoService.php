@@ -6,7 +6,7 @@ use App\Repository\DiagnosticoRepository;
 
 class DiagnosticoService
 {
-    protected $diagnosticoRepository;
+    protected DiagnosticoRepository $diagnosticoRepository;
 
     public function __construct(DiagnosticoRepository $diagnosticoRepository)
     {
@@ -16,6 +16,21 @@ class DiagnosticoService
     public function listartodo()
     {
         return $this->diagnosticoRepository->listartodo();
+    }
+
+    public function inventariosDisponibles()
+    {
+        return $this->diagnosticoRepository->inventariosDisponibles();
+    }
+
+    public function inventarioPorId(int $idInventario)
+    {
+        return $this->diagnosticoRepository->inventarioPorId($idInventario);
+    }
+
+    public function mecanicos()
+    {
+        return $this->diagnosticoRepository->mecanicos();
     }
 
     public function store(array $datos)
@@ -30,11 +45,11 @@ class DiagnosticoService
 
     public function update(int $id, array $datos)
     {
-        $this->diagnosticoRepository->update($id, $datos);
+        return $this->diagnosticoRepository->update($id, $datos);
     }
 
     public function destroy(int $id)
     {
-        $this->diagnosticoRepository->destroy($id);
+        return $this->diagnosticoRepository->destroy($id);
     }
 }

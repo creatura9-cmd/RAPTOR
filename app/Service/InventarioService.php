@@ -18,9 +18,23 @@ class InventarioService
         return $this->inventario_repository->listartodo();
     }
 
+    public function listarMotos()
+    {
+        return $this->inventario_repository->listarMotos();
+    }
+
+    public function listarMecanicos()
+    {
+        return $this->inventario_repository->listarMecanicos();
+    }
+
     public function store(array $datos)
     {
-        $this->inventario_repository->store($datos);
+        if ($datos['estado_inventario'] !== 'finalizado') {
+            $datos['condicion_general'] = null;
+        }
+
+        return $this->inventario_repository->store($datos);
     }
 
     public function edit(int $id)
@@ -30,6 +44,10 @@ class InventarioService
 
     public function update(int $id, array $datos)
     {
+        if ($datos['estado_inventario'] !== 'finalizado') {
+            $datos['condicion_general'] = null;
+        }
+
         $this->inventario_repository->update($id, $datos);
     }
 

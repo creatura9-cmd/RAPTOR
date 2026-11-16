@@ -11,8 +11,14 @@ return new class extends Migration
         Schema::create('inventario', function (Blueprint $table) {
             $table->id();
 
+            $table->unsignedBigInteger('recepcion')
+                ->unique();
+
             $table->foreignId('id_moto')
                 ->constrained('moto');
+
+            $table->foreignId('id_mecanico')
+                ->constrained('mecanicos', 'id_mecanico');
 
             $table->text('descripcion')->nullable();
 
@@ -23,7 +29,7 @@ return new class extends Migration
                 'bueno',
                 'regular',
                 'malo',
-            ]);
+            ])->nullable();
 
             $table->enum('estado_inventario', [
                 'pendiente',

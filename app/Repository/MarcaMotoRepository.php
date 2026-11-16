@@ -29,18 +29,15 @@ class MarcaMotoRepository
         $marca->update($datos);
     }
 
+    public function existeMotoAsociada(int $marcaId): bool
+    {
+        return Moto::where('id_marca', $marcaId)->exists();
+    }
+
     public function destroy(int $id)
     {
         $marca = MarcaMoto::findOrFail($id);
 
-        $tieneMotos = Moto::where('id_marca', $id)->exists();
-
-        if ($tieneMotos) {
-            return false;
-        }
-
         $marca->delete();
-
-        return true;
     }
 }

@@ -20,6 +20,12 @@ class InventarioRequest extends FormRequest
                 'exists:moto,id',
             ],
 
+            'id_mecanico' => [
+                'required',
+                'integer',
+                'exists:mecanicos,id_mecanico',
+            ],
+
             'descripcion' => [
                 'nullable',
                 'string',
@@ -30,14 +36,15 @@ class InventarioRequest extends FormRequest
                 'date',
             ],
 
-            'condicion_general' => [
-                'required',
-                'in:bueno,regular,malo',
-            ],
-
             'estado_inventario' => [
                 'required',
                 'in:pendiente,en_proceso,finalizado',
+            ],
+
+            'condicion_general' => [
+                'exclude_unless:estado_inventario,finalizado',
+                'required_if:estado_inventario,finalizado',
+                'in:bueno,regular,malo',
             ],
         ];
     }
@@ -46,14 +53,19 @@ class InventarioRequest extends FormRequest
     {
         return [
             'id_moto.required' => 'La moto es obligatoria.',
+            'id_moto.integer' => 'La moto seleccionada no es válida.',
             'id_moto.exists' => 'La moto seleccionada no existe.',
+
+            'id_mecanico.required' => 'El mecánico es obligatorio.',
+            'id_mecanico.integer' => 'El mecánico seleccionado no es válido.',
+            'id_mecanico.exists' => 'El mecánico seleccionado no existe.',
 
             'descripcion.string' => 'La descripción debe ser un texto.',
 
             'fecha_registro.required' => 'La fecha de registro es obligatoria.',
             'fecha_registro.date' => 'La fecha de registro no es válida.',
 
-            'condicion_general.required' => 'La condición general es obligatoria.',
+            'condicion_general.required_if' => 'La condición general es obligatoria cuando el inventario está finalizado.',
             'condicion_general.in' => 'La condición general seleccionada no es válida.',
 
             'estado_inventario.required' => 'El estado del inventario es obligatorio.',

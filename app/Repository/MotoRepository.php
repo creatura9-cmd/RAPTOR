@@ -1,7 +1,10 @@
 <?php
 
 namespace App\Repository;
+
 use App\Models\Moto;
+use App\Models\Cliente;
+use App\Models\MarcaMoto;
 use Illuminate\Database\QueryException;
 
 class MotoRepository
@@ -9,6 +12,16 @@ class MotoRepository
     public function listartodo()
     {
         return Moto::with(['cliente', 'marca'])->get();
+    }
+
+    public function listarClientes()
+    {
+        return Cliente::orderBy('nombre')->get();
+    }
+
+    public function listarMarcas()
+    {
+        return MarcaMoto::orderBy('nombre_marca')->get();
     }
 
     public function store(array $datos)
@@ -44,5 +57,4 @@ class MotoRepository
             throw $e;
         }
     }
-
 }

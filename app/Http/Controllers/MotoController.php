@@ -3,10 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\MotoRequest;
-use App\Models\Cliente;
-use App\Models\MarcaMoto;
 use App\Service\MotoService;
-
 
 class MotoController extends Controller
 {
@@ -26,8 +23,8 @@ class MotoController extends Controller
 
     public function create()
     {
-        $clientes = Cliente::orderBy('nombre')->get();
-        $marcas = MarcaMoto::orderBy('nombre_marca')->get();
+        $clientes = $this->moto_service->listarClientes();
+        $marcas = $this->moto_service->listarMarcas();
 
         return view('Moto.create', compact('clientes', 'marcas'));
     }
@@ -45,8 +42,8 @@ class MotoController extends Controller
     {
         $moto = $this->moto_service->edit($id);
 
-        $clientes = Cliente::orderBy('nombre')->get();
-        $marcas = MarcaMoto::orderBy('nombre_marca')->get();
+        $clientes = $this->moto_service->listarClientes();
+        $marcas = $this->moto_service->listarMarcas();
 
         return view('Moto.update', compact('moto', 'clientes', 'marcas'));
     }
@@ -66,13 +63,12 @@ class MotoController extends Controller
 
         if (! $eliminada) {
             return redirect()
-            ->route('moto.index')
-            ->with('error', 'No se puede eliminar esta motocicleta porque tiene registros relacionados en RAPTOR.');
-    }
+                ->route('moto.index')
+                ->with('error', 'No se puede eliminar esta motocicleta porque tiene registros relacionados en RAPTOR.');
+        }
 
-    return redirect()
-        ->route('moto.index')
-        ->with('destroy', 'Moto eliminada correctamente.');
+        return redirect()
+            ->route('moto.index')
+            ->with('destroy', 'Moto eliminada correctamente.');
     }
 }
-

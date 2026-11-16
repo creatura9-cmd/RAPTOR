@@ -18,6 +18,16 @@ class MotoService
         return $this->moto_repository->listartodo();
     }
 
+    public function listarClientes()
+    {
+        return $this->moto_repository->listarClientes();
+    }
+
+    public function listarMarcas()
+    {
+        return $this->moto_repository->listarMarcas();
+    }
+
     public function store(array $datos)
     {
         $this->moto_repository->store($datos);

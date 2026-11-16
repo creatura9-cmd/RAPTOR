@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\MarcaMotoRequest;
 use App\Service\MarcaMotoService;
-use Illuminate\Http\Request;
+
 
 class MarcaMotoController extends Controller
 {
@@ -43,9 +43,9 @@ class MarcaMotoController extends Controller
         return view('MarcaMoto.update', compact('marca'));
     }
 
-    public function update(int $id, Request $request)
+    public function update(int $id, MarcaMotoRequest $request)
     {
-        $this->marca_moto_service->update($id, $request->all());
+        $this->marca_moto_service->update($id, $request->validated());
 
         return redirect()
             ->route('marca_moto.index')

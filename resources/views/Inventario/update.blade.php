@@ -4,6 +4,7 @@
 
 <div class="p-6">
 
+    {{-- Encabezado --}}
     <div class="mb-6">
         <h1 class="text-2xl font-bold text-gray-800">
             Editar inventario
@@ -14,49 +15,82 @@
         </p>
     </div>
 
+    {{-- Formulario --}}
     <div class="bg-white rounded-lg shadow p-6">
 
-        <form action="{{ route('inventario.update', $inventario->id) }}" method="POST">
+        {{-- Información fija de la recepción --}}
+        <div class="mb-6 grid grid-cols-1 gap-3 sm:grid-cols-3">
+
+            <div>
+                <p class="text-xs font-medium text-gray-500">
+                    Número de recepción
+                </p>
+
+                <p class="text-sm font-semibold text-[#315A72]">
+                    RECEPCIÓN # {{ str_pad($inventario->recepcion, 3, '0', STR_PAD_LEFT) }}
+                </p>
+            </div>
+
+            <div>
+                <p class="text-xs font-medium text-gray-500">
+                    Placa
+                </p>
+
+                <p class="text-sm font-semibold text-gray-800">
+                    {{ $inventario->moto->placa }}
+                </p>
+            </div>
+
+            <div>
+                <p class="text-xs font-medium text-gray-500">
+                    Propietario
+                </p>
+
+                <p class="text-sm font-semibold text-gray-800">
+                    {{ $inventario->moto->cliente->nombre }}
+                    {{ $inventario->moto->cliente->apellido }}
+                </p>
+            </div>
+
+        </div>
+
+        <form action="{{ route('inventario.update', $inventario->id) }}"
+              method="POST">
 
             @csrf
             @method('PUT')
+            <input type="hidden" name="id_moto" value="{{ $inventario->id_moto }}">
 
-            {{-- Moto --}}
+            {{-- Mecánico responsable --}}
             <div class="mb-4">
-                <label for="id_moto"
+                <label for="id_mecanico"
                        class="block text-sm font-medium text-gray-700 mb-1">
-                    Moto
+                    Mecánico responsable
                 </label>
 
-                <select name="id_moto"
-                        id="id_moto"
+                <select name="id_mecanico"
+                        id="id_mecanico"
                         class="w-full border border-gray-300 rounded-lg px-3 py-2">
 
                     <option value="">
-                        Seleccione una moto
+                        Seleccione un mecánico
                     </option>
 
-                    @foreach ($motos as $moto)
+                    @foreach ($mecanicos as $mecanico)
+                        <option value="{{ $mecanico->id_mecanico }}"
+                            {{ old('id_mecanico', $inventario->id_mecanico) == $mecanico->id_mecanico ? 'selected' : '' }}>
 
-                        <option value="{{ $moto->id }}"
-                            {{ old('id_moto', $inventario->id_moto) == $moto->id ? 'selected' : '' }}>
-
-                            {{ $moto->placa }}
+                            {{ $mecanico->nombre }}
+                            {{ $mecanico->apellido }}
                             -
-                            {{ $moto->marca->nombre_marca }}
-                            -
-                            {{ $moto->modelo }}
-                            -
-                            {{ $moto->cliente->nombre }}
-                            {{ $moto->cliente->apellido }}
+                            {{ $mecanico->numero_documento }}
 
                         </option>
-
                     @endforeach
 
                 </select>
 
-                @error('id_moto')
+                @error('id_mecanico')
                     <p class="text-red-600 text-sm mt-1">
                         {{ $message }}
                     </p>
@@ -83,7 +117,7 @@
                 @enderror
             </div>
 
-            {{-- Fecha --}}
+            {{-- Fecha de registro --}}
             <div class="mb-4">
                 <label for="fecha_registro"
                        class="block text-sm font-medium text-gray-700 mb-1">
@@ -174,17 +208,17 @@
             </div>
 
             {{-- Botones --}}
-            <div class="flex items-center gap-3">
-
-                <button type="submit"
-                        class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
-                    Actualizar inventario
-                </button>
+            <div class="flex items-center justify-end gap-2">
 
                 <a href="{{ route('inventario.index') }}"
-                   class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300">
+                   class="inline-flex items-center justify-center rounded-lg border border-[#dce8ed] bg-white px-3 py-2 text-xs font-semibold text-slate-600 transition hover:bg-[#f0f5f7]">
                     Cancelar
                 </a>
+
+                <button type="submit"
+                        class="inline-flex items-center justify-center rounded-lg bg-[#315A72] px-3 py-2 text-xs font-semibold text-white transition hover:bg-[#294c61]">
+                    Actualizar inventario
+                </button>
 
             </div>
 

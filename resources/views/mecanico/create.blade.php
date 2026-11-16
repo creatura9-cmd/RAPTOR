@@ -201,24 +201,24 @@
                         {{ $message }}
                     </p>
                 @enderror
+        </div>
 
-            </div>
 
-            <div class="flex gap-3">
-
-                <button
-                    type="submit"
-                    class="rounded-lg bg-indigo-600 px-5 py-2 text-white hover:bg-indigo-700"
-                >
-                    Guardar
-                </button>
+            <div class="flex justify-end gap-3">
 
                 <a
                     href="{{ route('mecanico.index') }}"
-                    class="rounded-lg bg-slate-500 px-5 py-2 text-white hover:bg-slate-600"
+                    class="rounded-lg border border-[#315A72] px-5 py-2 text-[#315A72] font-medium hover:bg-[#f0f5f7] transition"
                 >
                     Cancelar
                 </a>
+
+                <button
+                    type="submit"
+                    class="rounded-lg bg-[#315A72] px-5 py-2 text-white font-medium hover:bg-[#26485c] transition"
+                >
+                    Guardar
+                </button>
 
             </div>
 

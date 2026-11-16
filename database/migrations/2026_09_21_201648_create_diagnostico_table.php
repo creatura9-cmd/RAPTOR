@@ -13,6 +13,7 @@ return new class extends Migration
             $table->id();
 
             $table->foreignId('id_inventario')
+                ->unique()
                 ->constrained('inventario');
 
             $table->foreignId('id_mecanico')

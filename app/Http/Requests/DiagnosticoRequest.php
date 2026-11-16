@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class DiagnosticoRequest extends FormRequest
 {
@@ -13,10 +14,19 @@ class DiagnosticoRequest extends FormRequest
 
     public function rules(): array
     {
+        $idDiagnostico = $this->route('diagnostico');
+
+        $reglaInventario = Rule::unique('diagnostico', 'id_inventario');
+
+        if ($idDiagnostico !== null) {
+            $reglaInventario->ignore($idDiagnostico, 'id');
+        }
+
         return [
             'id_inventario' => [
                 'required',
                 'exists:inventario,id',
+                $reglaInventario,
             ],
 
             'id_mecanico' => [
@@ -46,6 +56,7 @@ class DiagnosticoRequest extends FormRequest
         return [
             'id_inventario.required' => 'El inventario es obligatorio.',
             'id_inventario.exists' => 'El inventario seleccionado no existe.',
+            'id_inventario.unique' => 'Esta recepción ya tiene un diagnóstico registrado.',
 
             'id_mecanico.required' => 'El mecánico es obligatorio.',
             'id_mecanico.exists' => 'El mecánico seleccionado no existe.',

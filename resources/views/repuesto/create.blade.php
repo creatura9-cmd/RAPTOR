@@ -123,16 +123,20 @@
 
             </div>
 
-            <div class="flex justify-between">
+            <div class="flex justify-end gap-3 mt-8">
 
-                <a href="{{ route('repuesto.index') }}"
-                   class="bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600">
+                <a
+                    href="{{ route('repuesto.index') }}"
+                    class="rounded-lg border border-[#315A72] px-5 py-2 text-sm text-[#315A72] font-medium hover:bg-[#f0f5f7] transition"
+                >
                     Cancelar
                 </a>
 
-                <button type="submit"
-                        class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
-                    Guardar Repuesto
+                <button
+                    type="submit"
+                    class="rounded-lg bg-[#315A72] px-5 py-2 text-sm text-white font-medium hover:bg-[#26485c] transition"
+                >
+                    Guardar
                 </button>
 
             </div>
