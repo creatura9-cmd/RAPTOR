@@ -179,41 +179,6 @@
                 @enderror
             </div>
 
-            {{-- Estado del inventario --}}
-            <div class="mb-6">
-                <label for="estado_inventario"
-                       class="block text-sm font-medium text-gray-700 mb-1">
-                    Estado del inventario
-                </label>
-
-                <select name="estado_inventario"
-                        id="estado_inventario"
-                        class="w-full border border-gray-300 rounded-lg px-3 py-2">
-
-                    <option value="pendiente"
-                        {{ old('estado_inventario', 'pendiente') == 'pendiente' ? 'selected' : '' }}>
-                        Pendiente
-                    </option>
-
-                    <option value="en_proceso"
-                        {{ old('estado_inventario') == 'en_proceso' ? 'selected' : '' }}>
-                        En proceso
-                    </option>
-
-                    <option value="finalizado"
-                        {{ old('estado_inventario') == 'finalizado' ? 'selected' : '' }}>
-                        Finalizado
-                    </option>
-
-                </select>
-
-                @error('estado_inventario')
-                    <p class="text-red-600 text-sm mt-1">
-                        {{ $message }}
-                    </p>
-                @enderror
-            </div>
-
             {{-- Botones --}}
             <div class="flex items-center justify-end gap-2">
 

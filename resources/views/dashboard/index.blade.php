@@ -19,33 +19,31 @@
                         'valor' => $estadisticas['diagnosticos'],
                         'icono' => 'square-mouse-pointer',
                         'ruta' => ['diagnostico.index'],
-                        'franja' => [
-                            [
-                                'etiqueta' => 'En proceso',
-                                'valor' => $diagnosticosPorEstado['en_proceso'] ?? 0,
-                                'clase' => 'bg-sky-100 text-sky-800',
-                            ],
-                            [
-                                'etiqueta' => 'Finalizados',
-                                'valor' => $diagnosticosPorEstado['finalizado'] ?? 0,
-                                'clase' => 'bg-emerald-100 text-emerald-800',
-                            ],
-                            [
-                                'etiqueta' => 'Cancelados',
-                                'valor' => $diagnosticosPorEstado['cancelado'] ?? 0,
-                                'clase' => 'bg-red-100 text-red-700',
-                            ],
-                        ],
                     ],
                     [
                         'titulo' => 'Preórdenes',
-                        'valor'  => $estadisticas['preordenes'],
-                        'icono'  => 'alarm-clock',
+                        'valor' => $estadisticas['preordenes'],
+                        'icono' => 'alarm-clock',
                         'ruta' => ['preorden.index'],
                         'franja' => [
-                            ['etiqueta' => 'Aprobada',    'valor' => $preordenesPorEstado['aceptada']  ?? 0, 'clase' => 'bg-emerald-100 text-emerald-800', 'texto' => 'text-emerald-700'],
-                            ['etiqueta' => 'En espera',   'valor' => $preordenesPorEstado['en_espera'] ?? 0, 'clase' => 'bg-sky-100 text-sky-800',         'texto' => 'text-sky-700'],
-                            ['etiqueta' => 'Desaprobada', 'valor' => $preordenesPorEstado['rechazada'] ?? 0, 'clase' => 'bg-red-100 text-red-700',         'texto' => 'text-red-600'],
+                            [
+                                'etiqueta' => 'Aprobadas',
+                                'valor' => $preordenesPorEstado['aprobada'] ?? 0,
+                                'clase' => 'bg-emerald-100 text-emerald-800',
+                                'texto' => 'text-emerald-700',
+                            ],
+                            [
+                                'etiqueta' => 'Pendientes',
+                                'valor' => $preordenesPorEstado['pendiente'] ?? 0,
+                                'clase' => 'bg-sky-100 text-sky-800',
+                                'texto' => 'text-sky-700',
+                            ],
+                            [
+                                'etiqueta' => 'Rechazadas',
+                                'valor' => $preordenesPorEstado['rechazada'] ?? 0,
+                                'clase' => 'bg-red-100 text-red-700',
+                                'texto' => 'text-red-600',
+                            ],
                         ],
                     ],
                     [
@@ -80,7 +78,7 @@
                     [
                         'titulo' => 'Entregas registradas',
                         'valor' => $estadisticas['entregas'],
-                        'icono' =>'square-arrow-up-right',
+                        'icono' => 'square-arrow-up-right',
                         'ruta' => ['entrega.index'],
                     ],
                 ],
@@ -105,23 +103,6 @@
                         'valor' => $estadisticas['diagnosticos'],
                         'icono' => 'file-cog',
                         'ruta' => ['diagnostico.index'],
-                        'franja' => [
-                            [
-                                'etiqueta' => 'En proceso',
-                                'valor' => $diagnosticosPorEstado['en_proceso'] ?? 0,
-                                'clase' => 'bg-sky-100 text-sky-800',
-                            ],
-                            [
-                                'etiqueta' => 'Finalizados',
-                                'valor' => $diagnosticosPorEstado['finalizado'] ?? 0,
-                                'clase' => 'bg-emerald-100 text-emerald-800',
-                            ],
-                            [
-                                'etiqueta' => 'Cancelados',
-                                'valor' => $diagnosticosPorEstado['cancelado'] ?? 0,
-                                'clase' => 'bg-red-100 text-red-700',
-                            ],
-                        ],
                     ],
                     [
                         'titulo' => 'Preórdenes',
@@ -131,12 +112,12 @@
                         'franja' => [
                             [
                                 'etiqueta' => 'Aprobadas',
-                                'valor' => $preordenesPorEstado['aceptada'] ?? 0,
+                                'valor' => $preordenesPorEstado['aprobada'] ?? 0,
                                 'clase' => 'bg-emerald-100 text-emerald-800',
                             ],
                             [
-                                'etiqueta' => 'En espera',
-                                'valor' => $preordenesPorEstado['en_espera'] ?? 0,
+                                'etiqueta' => 'Pendientes',
+                                'valor' => $preordenesPorEstado['pendiente'] ?? 0,
                                 'clase' => 'bg-sky-100 text-sky-800',
                             ],
                             [
@@ -176,9 +157,9 @@
                 'titulo' => 'Seguimiento de servicios',
                 'descripcion' => 'Revisa el avance de cada recepción, los valores aprobados, los pagos confirmados y las entregas.',
                 'tarjetas' => [
-                    ['titulo' => 'Pagos registrados', 'valor' => $estadisticas['pagos'], 'icono' => 'credit-card', 'ruta' => ['pago.index']],
-                    ['titulo' => 'Valor de pagos confirmados', 'valor' => '$' . number_format($estadisticas['pagos_confirmados'], 0, ',', '.'), 'icono' => 'tag', 'ruta' => ['pago.index']],
-                    ['titulo' => 'Entregas registradas', 'valor' => $estadisticas['entregas'], 'icono' => 'clipboard', 'ruta' => ['entrega.index']],
+                    ['titulo' => 'Pagos registrados', 'valor' => $estadisticas['pagos'], 'icono' => 'hand-coins', 'ruta' => ['pago.index']],
+                    ['titulo' => 'Valor de pagos confirmados', 'valor' => '$' . number_format($estadisticas['pagos_confirmados'], 0, ',', '.'), 'icono' => 'hand-coins', 'ruta' => ['pago.index']],
+                    ['titulo' => 'Entregas registradas', 'valor' => $estadisticas['entregas'], 'icono' => 'square-arrow-up-right', 'ruta' => ['entrega.index']],
                 ],
             ],
 
@@ -195,7 +176,6 @@
 
         $resumen = $resumenes[$seccion];
 
-        // Mismas pills del portal de clientes
         $pills = [
             'azul'  => 'bg-sky-100 text-sky-800',
             'verde' => 'bg-emerald-100 text-emerald-800',
@@ -203,7 +183,6 @@
             'rojo'  => 'bg-red-100 text-red-700',
         ];
 
-        // Tono de la pill según el texto de la etapa
         $tonoEtapa = function ($etapa) {
             $e = mb_strtolower((string) $etapa);
 
@@ -216,6 +195,7 @@
         };
 
         $fecha = fn ($valor) => $valor ? \Illuminate\Support\Carbon::parse($valor)->format('d/m/Y') : 'No registrada';
+
         $folioRecepcion = fn ($numero) => $numero !== null
             ? 'RECEPCIÓN # ' . str_pad((string) $numero, 3, '0', STR_PAD_LEFT)
             : 'RECEPCIÓN SIN FOLIO';
@@ -229,7 +209,7 @@
             --navy-2: #123e5a;
             --blue: #1f5f8b;
             --yellow: #c9993f;
-            --panel-head: #DCE8ED; /* azul de los bloques: cambiar solo aquí */
+            --panel-head: #DCE8ED;
             --line: #e3eaf0;
             color: #1e2f3c;
         }
@@ -240,7 +220,9 @@
             color: #14252F;
         }
 
-        #panel-raptor .stat-card { border-top: 2px solid transparent;}
+        #panel-raptor .stat-card {
+            border-top: 2px solid transparent;
+        }
 
         #panel-raptor a:focus-visible,
         #panel-raptor button:focus-visible {
@@ -310,14 +292,23 @@
                             </p>
 
                             @if ($href)
-                                <p class="mt-2 text-[10px] font-medium text-[#1f5f8b]">
-                                     >
+                                <p class="mt-2 inline-flex items-center gap-1 text-[10px] font-semibold text-[#1f5f8b]">
+                                    Consultar
+                                    <svg class="h-3.5 w-3.5 transition-transform duration-200 group-hover:translate-x-1"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        viewBox="0 0 24 24"
+                                        aria-hidden="true">
+                                        <path stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="2"
+                                            d="M5 12h14m-6-6 6 6-6 6" />
+                                    </svg>
                                 </p>
                             @endif
                         </div>
                     </div>
 
-                    {{-- Estados a todo el ancho de la tarjeta --}}
                     @if (!empty($tarjeta['franja']))
                         <div class="mt-2 grid grid-cols-3 gap-1">
                             @foreach ($tarjeta['franja'] as $item)
@@ -346,7 +337,7 @@
 
                 <div class="divide-y divide-[#e3eaf0]">
                     @forelse ($seguimientos as $servicio)
-                       <div x-data="{ modalAbierto: false }" class="p-5 transition-colors duration-200 hover:bg-[#e8edf1]">
+                        <div x-data="{ modalAbierto: false }" class="p-5 transition-colors duration-200 hover:bg-[#e8edf1]">
                             <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                                 <div class="flex min-w-0 items-center gap-4">
                                     <span class="grid h-12 w-14 shrink-0 place-items-center rounded-lg bg-[#eef3f7] text-[#0b2a3f]">
@@ -371,8 +362,9 @@
                                     <span class="inline-flex w-fit rounded-full px-3 py-1.5 text-xs font-medium {{ $pills[$tonoEtapa($servicio->etapa)] }}">
                                         {{ $servicio->etapa }}
                                     </span>
+
                                     <button type="button" @click="modalAbierto = true"
-                                            class="inline-flex items-center justify-center gap-1.5 rounded-lg bg-[#315A72] px-3 py-1.5 text-xs font-medium text-white hover:bg-[#294c61]">
+                                        class="inline-flex items-center justify-center gap-1.5 rounded-lg bg-[#315A72] px-3 py-1.5 text-xs font-medium text-white hover:bg-[#294c61]">
                                         <span class="block h-4 w-4">@include('layouts.partials.icons', ['icon' => 'eye'])</span>
                                         Ver detalles
                                     </button>
@@ -381,18 +373,15 @@
 
                             {{-- Modal con las etapas del taller --}}
                             <div x-cloak x-show="modalAbierto" x-transition.opacity
-                                 @keydown.escape.window="modalAbierto = false"
-                                 @click.self="modalAbierto = false"
-                                 class="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto bg-slate-950/55 p-4">
+                                @keydown.escape.window="modalAbierto = false"
+                                @click.self="modalAbierto = false"
+                                class="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto bg-slate-950/55 p-4">
                                 <div x-show="modalAbierto" x-transition
-                                     class="my-auto w-full max-w-2xl overflow-hidden rounded-2xl bg-white shadow-2xl"
-                                     role="dialog" aria-modal="true">
+                                    class="my-auto w-full max-w-2xl overflow-hidden rounded-2xl bg-white shadow-2xl"
+                                    role="dialog" aria-modal="true">
 
-                                    {{-- Encabezado del modal --}}
                                     <div class="flex items-center justify-between border-b border-[#dce8ed] bg-[#f0f5f7] px-6 py-5">
-
                                         <div class="flex min-w-0 items-center gap-3">
-
                                             <div class="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-xl bg-white text-[#315A72]">
                                                 <span class="block h-5 w-5">
                                                     @include('layouts.partials.icons', ['icon' => 'cog'])
@@ -403,32 +392,21 @@
                                                 <h2 class="break-words text-lg font-bold text-slate-800">
                                                     Detalles del servicio
                                                 </h2>
-
                                                 <p class="mt-1 text-xs text-slate-500">
                                                     {{ $folioRecepcion($servicio->recepcion) }}
                                                 </p>
                                             </div>
-
                                         </div>
 
-                                        {{-- Cerrar --}}
-                                        <button
-                                            type="button"
+                                        <button type="button"
                                             @click="modalAbierto = false"
                                             aria-label="Cerrar modal"
                                             title="Cerrar"
-                                            class="ml-3 flex-shrink-0 rounded-lg p-2 text-slate-500 transition hover:bg-white hover:text-slate-800"
-                                        >
+                                            class="ml-3 flex-shrink-0 rounded-lg p-2 text-slate-500 transition hover:bg-white hover:text-slate-800">
                                             <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path
-                                                    stroke-linecap="round"
-                                                    stroke-linejoin="round"
-                                                    stroke-width="2"
-                                                    d="M6 18L18 6M6 6l12 12"
-                                                />
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                                             </svg>
                                         </button>
-
                                     </div>
 
                                     <div class="max-h-[65vh] space-y-5 overflow-y-auto p-6">
@@ -441,10 +419,7 @@
                                         </div>
 
                                         <div class="border-t border-[#e3eaf0] pt-4">
-                                            <div class="flex flex-wrap items-center justify-between gap-2">
-                                                <h4 class="font-medium text-[#0b2a3f]">Diagnóstico</h4>
-                                                <span class="rounded-full px-3 py-1 text-xs font-medium {{ $pills[$tonoEtapa($servicio->diagnostico->estado ?? 'Pendiente')] }}">{{ $servicio->diagnostico->estado ?? 'Pendiente' }}</span>
-                                            </div>
+                                            <h4 class="font-medium text-[#0b2a3f]">Diagnóstico</h4>
                                             @if ($servicio->diagnostico)
                                                 <p class="mt-2 whitespace-pre-line text-sm text-slate-700">{{ $servicio->diagnostico->descripcion ?: 'Sin descripción registrada.' }}</p>
                                             @else
@@ -520,7 +495,6 @@
 
         {{-- ===================== SEGUIMIENTO ===================== --}}
         @if ($seccion === 'seguimiento')
-
             <section class="overflow-hidden rounded-xl border border-[#e3eaf0] bg-white shadow-sm">
                 <div class="panel-head px-4 py-2">
                     <h3 class="text-sm font-semibold">Avance de las recepciones</h3>
@@ -531,8 +505,7 @@
 
                 <div class="divide-y divide-[#e3eaf0]">
                     @forelse ($seguimientos as $servicio)
-                       <div x-data="{ modalAbierto: false }" class="p-5 transition-colors duration-200 hover:bg-[#e8edf1]">
-
+                        <div x-data="{ modalAbierto: false }" class="p-5 transition-colors duration-200 hover:bg-[#e8edf1]">
                             <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                                 <div class="flex min-w-0 items-center gap-4">
                                     <span class="grid h-12 w-14 shrink-0 place-items-center rounded-lg bg-[#eef3f7] text-[#0b2a3f]">
@@ -559,7 +532,7 @@
                                         {{ $servicio->etapa }}
                                     </span>
                                     <button type="button" @click="modalAbierto = true"
-                                            class="inline-flex items-center justify-center gap-1.5 rounded-lg bg-[#315A72] px-3 py-1.5 text-xs font-medium text-white hover:bg-[#294c61]">
+                                        class="inline-flex items-center justify-center gap-1.5 rounded-lg bg-[#315A72] px-3 py-1.5 text-xs font-medium text-white hover:bg-[#294c61]">
                                         <span class="block h-4 w-4">@include('layouts.partials.icons', ['icon' => 'eye'])</span>
                                         Ver detalles
                                     </button>
@@ -584,18 +557,15 @@
 
                             {{-- Modal de detalles --}}
                             <div x-cloak x-show="modalAbierto" x-transition.opacity
-                                 @keydown.escape.window="modalAbierto = false"
-                                 @click.self="modalAbierto = false"
-                                 class="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto bg-slate-950/55 p-4">
+                                @keydown.escape.window="modalAbierto = false"
+                                @click.self="modalAbierto = false"
+                                class="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto bg-slate-950/55 p-4">
                                 <div x-show="modalAbierto" x-transition
-                                     class="my-auto w-full max-w-2xl overflow-hidden rounded-2xl bg-white shadow-2xl"
-                                     role="dialog" aria-modal="true">
+                                    class="my-auto w-full max-w-2xl overflow-hidden rounded-2xl bg-white shadow-2xl"
+                                    role="dialog" aria-modal="true">
 
-                                    {{-- Encabezado del modal --}}
                                     <div class="flex items-center justify-between border-b border-[#dce8ed] bg-[#f0f5f7] px-6 py-5">
-
                                         <div class="flex min-w-0 items-center gap-3">
-
                                             <div class="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-xl bg-white text-[#315A72]">
                                                 <span class="block h-5 w-5">
                                                     @include('layouts.partials.icons', ['icon' => 'grid-2x2-check'])
@@ -606,36 +576,24 @@
                                                 <h2 class="break-words text-lg font-bold text-slate-800">
                                                     Detalles del seguimiento
                                                 </h2>
-
                                                 <p class="mt-1 text-xs text-slate-500">
                                                     {{ $folioRecepcion($servicio->recepcion) }}
                                                 </p>
                                             </div>
-
                                         </div>
 
-                                        {{-- Cerrar --}}
-                                        <button
-                                            type="button"
+                                        <button type="button"
                                             @click="modalAbierto = false"
                                             aria-label="Cerrar modal"
                                             title="Cerrar"
-                                            class="ml-3 flex-shrink-0 rounded-lg p-2 text-slate-500 transition hover:bg-white hover:text-slate-800"
-                                        >
+                                            class="ml-3 flex-shrink-0 rounded-lg p-2 text-slate-500 transition hover:bg-white hover:text-slate-800">
                                             <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path
-                                                    stroke-linecap="round"
-                                                    stroke-linejoin="round"
-                                                    stroke-width="2"
-                                                    d="M6 18L18 6M6 6l12 12"
-                                                />
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                                             </svg>
                                         </button>
-
                                     </div>
 
                                     <div class="max-h-[65vh] space-y-5 overflow-y-auto p-6">
-
                                         <div>
                                             <div class="flex flex-wrap items-center gap-3">
                                                 <span class="rounded-full px-3 py-1.5 text-sm font-medium {{ $pills[$tonoEtapa($servicio->etapa)] }}">{{ $servicio->etapa }}</span>
@@ -648,7 +606,6 @@
                                             <h4 class="font-medium text-[#0b2a3f]">Diagnóstico</h4>
                                             @if ($servicio->diagnostico)
                                                 <p class="mt-2 text-sm text-slate-700">{{ $servicio->diagnostico->descripcion ?: 'Sin descripción registrada.' }}</p>
-                                                <p class="mt-1 text-sm text-slate-500">Estado: {{ $servicio->diagnostico->estado }}</p>
                                                 <p class="mt-2 text-xs text-slate-500">El diagnóstico registra la valoración inicial de las fallas observadas y los repuestos sugeridos.</p>
                                             @else
                                                 <p class="mt-2 rounded-xl bg-slate-50 p-4 text-sm text-slate-500">Todavía no hay diagnóstico registrado para esta recepción.</p>
@@ -711,7 +668,6 @@
                                     </div>
                                 </div>
                             </div>
-
                         </div>
                     @empty
                         <div class="px-5 py-10 text-center">
@@ -721,12 +677,10 @@
                     @endforelse
                 </div>
             </section>
-
         @endif
 
         {{-- ===================== ACTIVIDADES RECIENTES: INICIO ===================== --}}
         @if ($seccion === 'inicio')
-
             <section class="overflow-hidden rounded-xl border border-[#e3eaf0] bg-white shadow-sm">
                 <div class="panel-head flex flex-col gap-1 px-4 py-2 sm:flex-row sm:items-center sm:justify-between">
                     <div>
@@ -764,12 +718,10 @@
                     @endforelse
                 </div>
             </section>
-
         @endif
 
         {{-- ===================== RECEPCIÓN ===================== --}}
         @if ($seccion === 'recepcion')
-
             <section class="overflow-hidden rounded-xl border border-[#e3eaf0] bg-white shadow-sm">
                 <div class="panel-head flex flex-col gap-1 px-4 py-2 sm:flex-row sm:items-center sm:justify-between">
                     <div>
@@ -785,9 +737,7 @@
 
                 <div class="divide-y divide-[#e3eaf0]">
                     @forelse ($recepciones as $recepcion)
-
                         <div x-data="{ modalAbierto: false }" class="p-5 transition-colors duration-200 hover:bg-[#e8edf1]">
-
                             <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                                 <div class="flex min-w-0 items-center gap-4">
                                     <span class="grid h-12 w-14 shrink-0 place-items-center rounded-lg bg-[#eef3f7] text-[#0b2a3f]">
@@ -813,14 +763,8 @@
                                 </div>
 
                                 <div class="flex flex-col gap-3 sm:items-end">
-                                    @php
-                                        $estadoRecepcion = ucfirst(str_replace('_', ' ', $recepcion->estado_inventario ?: 'Pendiente'));
-                                    @endphp
-                                    <span class="inline-flex w-fit rounded-full px-3 py-1.5 text-xs font-medium {{ $pills[$tonoEtapa($estadoRecepcion)] }}">
-                                        {{ $estadoRecepcion }}
-                                    </span>
                                     <button type="button" @click="modalAbierto = true"
-                                            class="inline-flex items-center justify-center gap-1.5 rounded-lg bg-[#315A72] px-3 py-1.5 text-xs font-medium text-white hover:bg-[#294c61]">
+                                        class="inline-flex items-center justify-center gap-1.5 rounded-lg bg-[#315A72] px-3 py-1.5 text-xs font-medium text-white hover:bg-[#294c61]">
                                         <span class="block h-4 w-4">@include('layouts.partials.icons', ['icon' => 'eye'])</span>
                                         Ver detalles
                                     </button>
@@ -829,64 +773,46 @@
 
                             {{-- Modal de recepción --}}
                             <div x-cloak x-show="modalAbierto" x-transition.opacity
-                                 @keydown.escape.window="modalAbierto = false"
-                                 @click.self="modalAbierto = false"
-                                 class="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto bg-slate-950/55 p-4">
+                                @keydown.escape.window="modalAbierto = false"
+                                @click.self="modalAbierto = false"
+                                class="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto bg-slate-950/55 p-4">
 
                                 <div x-show="modalAbierto" x-transition
-                                     class="my-auto w-full max-w-2xl overflow-hidden rounded-2xl bg-white shadow-2xl"
-                                     role="dialog" aria-modal="true"
-                                     aria-labelledby="titulo-modal-recepcion-{{ $recepcion->id_inventario }}">
+                                    class="my-auto w-full max-w-2xl overflow-hidden rounded-2xl bg-white shadow-2xl"
+                                    role="dialog" aria-modal="true"
+                                    aria-labelledby="titulo-modal-recepcion-{{ $recepcion->id_inventario }}">
 
-                                {{-- Encabezado del modal --}}
-                                <div class="flex items-center justify-between border-b border-[#dce8ed] bg-[#f0f5f7] px-6 py-5">
+                                    <div class="flex items-center justify-between border-b border-[#dce8ed] bg-[#f0f5f7] px-6 py-5">
+                                        <div class="flex min-w-0 items-center gap-3">
+                                            <div class="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-xl bg-white text-[#315A72]">
+                                                <span class="block h-5 w-5">
+                                                    @include('layouts.partials.icons', ['icon' => 'motorcycle'])
+                                                </span>
+                                            </div>
 
-                                    <div class="flex min-w-0 items-center gap-3">
-
-                                        <div class="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-xl bg-white text-[#315A72]">
-                                            <span class="block h-5 w-5">
-                                                @include('layouts.partials.icons', ['icon' => 'motorcycle'])
-                                            </span>
+                                            <div class="min-w-0">
+                                                <h2 id="titulo-modal-recepcion-{{ $recepcion->id_inventario }}"
+                                                    class="break-words text-lg font-bold text-slate-800">
+                                                    Detalles de la recepción
+                                                </h2>
+                                                <p class="mt-1 text-xs text-slate-500">
+                                                    {{ $folioRecepcion($recepcion->recepcion) }}
+                                                </p>
+                                            </div>
                                         </div>
 
-                                        <div class="min-w-0">
-                                            <h2
-                                                id="titulo-modal-recepcion-{{ $recepcion->id_inventario }}"
-                                                class="break-words text-lg font-bold text-slate-800"
-                                            >
-                                                Detalles de la recepción
-                                            </h2>
-
-                                            <p class="mt-1 text-xs text-slate-500">
-                                                {{ $folioRecepcion($recepcion->recepcion) }}
-                                            </p>
-                                        </div>
-
+                                        <button type="button"
+                                            @click="modalAbierto = false"
+                                            aria-label="Cerrar modal"
+                                            title="Cerrar"
+                                            class="ml-3 flex-shrink-0 rounded-lg p-2 text-slate-500 transition hover:bg-white hover:text-slate-800">
+                                            <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                                            </svg>
+                                        </button>
                                     </div>
 
-                                    {{-- Cerrar --}}
-                                    <button
-                                        type="button"
-                                        @click="modalAbierto = false"
-                                        aria-label="Cerrar modal"
-                                        title="Cerrar"
-                                        class="ml-3 flex-shrink-0 rounded-lg p-2 text-slate-500 transition hover:bg-white hover:text-slate-800"
-                                    >
-                                        <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path
-                                                stroke-linecap="round"
-                                                stroke-linejoin="round"
-                                                stroke-width="2"
-                                                d="M6 18L18 6M6 6l12 12"
-                                            />
-                                        </svg>
-                                    </button>
-
-                                </div>
-
-
                                     <div class="max-h-[70vh] space-y-5 overflow-y-auto p-6">
-
                                         {{-- Motocicleta --}}
                                         <div>
                                             <h4 class="font-medium text-[#0b2a3f]">Motocicleta</h4>
@@ -912,8 +838,8 @@
                                                     <p class="mt-1 font-semibold text-slate-800">{{ $fecha($recepcion->fecha_registro) }}</p>
                                                 </div>
                                                 <div class="rounded-lg border border-[#e3eaf0] bg-slate-50 p-3">
-                                                    <p class="text-xs font-semibold text-slate-500">Estado del inventario</p>
-                                                    <p class="mt-1 font-semibold text-slate-800">{{ $recepcion->estado_inventario ?: 'No registrado' }}</p>
+                                                    <p class="text-xs font-semibold text-slate-500">Número de recepción</p>
+                                                    <p class="mt-1 font-semibold text-slate-800">{{ $folioRecepcion($recepcion->recepcion) }}</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -959,9 +885,7 @@
                                     </div>
                                 </div>
                             </div>
-
                         </div>
-
                     @empty
                         <div class="px-5 py-10 text-center">
                             <p class="text-sm font-semibold text-slate-700">Todavía no hay recepciones registradas.</p>
@@ -979,14 +903,13 @@
                 </p>
 
                 <a href="{{ route('diagnostico.index') }}"
-                class="mt-2 inline-flex items-center gap-1.5 rounded-lg bg-[#0b2a3f] px-3 py-1.5 text-xs font-medium text-white hover:bg-[#123e5a]">
+                    class="mt-2 inline-flex items-center gap-1.5 rounded-lg bg-[#0b2a3f] px-3 py-1.5 text-xs font-medium text-white hover:bg-[#123e5a]">
                     Ir a Diagnóstico
                     <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
                     </svg>
                 </a>
             </div>
-
         @endif
 
     </div>

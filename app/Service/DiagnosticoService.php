@@ -50,6 +50,6 @@ class DiagnosticoService
 
     public function destroy(int $id)
     {
-        return $this->diagnosticoRepository->destroy($id);
+        return false;
     }
 }

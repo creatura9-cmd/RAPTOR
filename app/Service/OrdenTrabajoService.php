@@ -76,14 +76,7 @@ class OrdenTrabajoService
 
         $inventario = $diagnostico->inventario;
 
-        // 3. El inventario debe estar finalizado.
-        if ($inventario->estado_inventario !== 'finalizado') {
-            throw ValidationException::withMessages([
-                'id_preorden' => 'No se puede crear la orden de trabajo: el inventario debe estar finalizado.',
-            ]);
-        }
-
-        // 4. Una preorden solo puede tener una orden de trabajo.
+        // 3. Una preorden solo puede tener una orden de trabajo.
         if (
             $this->ordenTrabajoRepository
                 ->existeOrdenTrabajoPorPreorden($preorden->id)
@@ -93,7 +86,7 @@ class OrdenTrabajoService
             ]);
         }
 
-        // 5. Asignar el inventario correspondiente.
+        // 4. Asignar el inventario correspondiente.
         $datos['id_inventario'] = $inventario->id;
 
         return $this->ordenTrabajoRepository->store($datos);

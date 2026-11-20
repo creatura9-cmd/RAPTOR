@@ -27,7 +27,6 @@ class DiagnosticoRepository
     public function inventariosDisponibles(): Collection
     {
         return Inventario::with('moto')
-            ->where('estado_inventario', 'finalizado')
             ->whereDoesntHave('diagnosticos')
             ->get();
     }

@@ -44,10 +44,6 @@ class DiagnosticoRequest extends FormRequest
                 'date',
             ],
 
-            'estado' => [
-                'required',
-                'in:pendiente,en_proceso,finalizado,cancelado',
-            ],
         ];
     }
 
@@ -67,8 +63,6 @@ class DiagnosticoRequest extends FormRequest
             'fecha_diagnostico.required' => 'La fecha del diagnóstico es obligatoria.',
             'fecha_diagnostico.date' => 'La fecha del diagnóstico no es válida.',
 
-            'estado.required' => 'El estado del diagnóstico es obligatorio.',
-            'estado.in' => 'El estado seleccionado no es válido.',
         ];
     }
 }

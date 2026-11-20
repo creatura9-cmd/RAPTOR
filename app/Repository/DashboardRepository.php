@@ -51,34 +51,6 @@ class DashboardRepository
         return $estados;
     }
 
-    public function obtenerDiagnosticosPorEstado(): array
-    {
-        $estados = [
-            'en_proceso' => 0,
-            'finalizado' => 0,
-            'cancelado' => 0,
-        ];
-
-        if (
-            ! Schema::hasTable('diagnostico')
-            || ! Schema::hasColumn('diagnostico', 'estado')
-        ) {
-            return $estados;
-        }
-
-        $resultados = DB::table('diagnostico')
-            ->select('estado', DB::raw('COUNT(*) as cantidad'))
-            ->whereIn('estado', array_keys($estados))
-            ->groupBy('estado')
-            ->get();
-
-        foreach ($resultados as $resultado) {
-            $estados[$resultado->estado] = (int) $resultado->cantidad;
-        }
-
-        return $estados;
-    }
-
     public function obtenerPreordenesPorEstado(): array
     {
         $conteo = DB::table('preorden')
@@ -86,19 +58,13 @@ class DashboardRepository
             ->groupBy('estado')
             ->pluck('total', 'estado')
             ->mapWithKeys(fn ($total, $estado) => [
-                mb_strtolower(trim($estado)) => $total,
+                mb_strtolower(trim($estado)) => (int) $total,
             ]);
 
         return [
-            'aceptada' => ($conteo['aceptada'] ?? 0)
-                + ($conteo['aprobada'] ?? 0),
-
-            'en_espera' => ($conteo['en_espera'] ?? 0)
-                + ($conteo['en espera'] ?? 0)
-                + ($conteo['pendiente'] ?? 0),
-
-            'rechazada' => ($conteo['rechazada'] ?? 0)
-                + ($conteo['desaprobada'] ?? 0),
+            'aprobada' => $conteo['aprobada'] ?? 0,
+            'pendiente' => $conteo['pendiente'] ?? 0,
+            'rechazada' => $conteo['rechazada'] ?? 0,
         ];
     }
 
@@ -126,7 +92,6 @@ class DashboardRepository
                 'id_mecanico',
                 'fecha_registro',
                 'condicion_general',
-                'estado_inventario',
                 'descripcion',
             ],
             'moto' => [
@@ -189,7 +154,6 @@ class DashboardRepository
                 'inventario.recepcion as recepcion',
                 'inventario.fecha_registro',
                 'inventario.condicion_general',
-                'inventario.estado_inventario',
                 'inventario.descripcion',
                 'moto.placa',
                 'moto.modelo',
@@ -263,9 +227,9 @@ class DashboardRepository
             // Sumar únicamente los pagos confirmados.
             $pagado = 0.0;
 
-            if ($orden !== null) {
+            if ($preorden !== null) {
                 $pagado = (float) DB::table('pago')
-                    ->where('id_ordentrabajo', $orden->id)
+                    ->where('id_preorden', $preorden->id)
                     ->where('estado', 'confirmado')
                     ->sum('valor');
             }
@@ -304,12 +268,7 @@ class DashboardRepository
             } elseif ($preorden !== null) {
                 $etapa = 'Pendiente de aprobación';
             } elseif ($diagnostico !== null) {
-                $etapa = match ($diagnostico->estado) {
-                    'en_proceso' => 'Diagnóstico en proceso',
-                    'finalizado' => 'Diagnóstico finalizado',
-                    'cancelado' => 'Diagnóstico cancelado',
-                    default => 'Pendiente de diagnóstico',
-                };
+                $etapa = 'Diagnóstico registrado';
             } else {
                 $etapa = 'Recepción registrada';
             }
@@ -385,7 +344,6 @@ class DashboardRepository
             && Schema::hasTable('inventario')
             && Schema::hasColumn('inventario', 'recepcion')
             && Schema::hasColumn('diagnostico', 'id_inventario')
-            && Schema::hasColumn('diagnostico', 'estado')
         ) {
             $consulta = DB::table('diagnostico')
                 ->leftJoin(
@@ -397,7 +355,6 @@ class DashboardRepository
                 ->leftJoin('moto', 'inventario.id_moto', '=', 'moto.id')
                 ->select(
                     'diagnostico.id',
-                    'diagnostico.estado',
                     'diagnostico.fecha_diagnostico',
                     'diagnostico.created_at',
                     'diagnostico.updated_at',
@@ -419,8 +376,7 @@ class DashboardRepository
 
                 $actividades->push([
                     'tipo' => 'Diagnóstico registrado',
-                    'descripcion' => 'Estado: '
-                        . ($registro->estado ?: 'Sin estado')
+                    'descripcion' => 'Diagnóstico asociado a la recepción'
                         . ($registro->placa ? ' · Placa ' . $registro->placa : ''),
                     'fecha' => $fecha,
                     'referencia' => $this->formatearFolio($registro->folio_recepcion),

@@ -25,11 +25,6 @@ class PreordenService
         return $this->preordenRepository->listarDiagnosticosDisponibles();
     }
 
-    public function listarDiagnosticosFinalizados()
-    {
-        return $this->preordenRepository->listarDiagnosticosFinalizados();
-    }
-
     public function prepararFormularioCreate(?int $idPreorden): array
     {
         return [
@@ -116,6 +111,12 @@ class PreordenService
 
     public function destroy(int $id)
     {
+        if ($this->preordenRepository->tieneRelaciones($id)) {
+            throw ValidationException::withMessages([
+                'error' => 'No se puede eliminar esta preorden porque está relacionada con otros registros y áreas del sistema.',
+            ]);
+        }
+
         return $this->preordenRepository->destroy($id);
     }
 

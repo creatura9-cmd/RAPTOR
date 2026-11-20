@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\InventarioRequest;
 use App\Service\InventarioService;
+use Illuminate\Database\QueryException;
+use Illuminate\Validation\ValidationException;
 
 class InventarioController extends Controller
 {
@@ -23,7 +25,7 @@ class InventarioController extends Controller
 
     public function create()
     {
-        $motos = $this->inventario_service->listarMotos();
+        $motos = $this->inventario_service->listarMotosDisponibles();
         $mecanicos = $this->inventario_service->listarMecanicos();
 
         return view('Inventario.create', compact('motos', 'mecanicos'));
@@ -62,10 +64,34 @@ class InventarioController extends Controller
 
     public function destroy(int $id)
     {
-        $this->inventario_service->destroy($id);
+        try {
+            $this->inventario_service->destroy($id);
 
-        return redirect()
-            ->route('inventario.index')
-            ->with('destroy', 'Inventario eliminado correctamente');
+            return redirect()
+                ->route('inventario.index')
+                ->with('destroy', 'Inventario eliminado correctamente');
+
+        } catch (ValidationException $e) {
+
+            return redirect()
+                ->route('inventario.index')
+                ->with(
+                    'error',
+                    $e->errors()['error'][0] ?? 'No se puede eliminar este inventario.'
+                );
+
+        } catch (QueryException $e) {
+
+            if ($e->getCode() !== '23000') {
+                throw $e;
+            }
+
+            return redirect()
+                ->route('inventario.index')
+                ->with(
+                    'error',
+                    'No se puede eliminar este inventario porque tiene registros relacionados en el sistema.'
+                );
+        }
     }
 }

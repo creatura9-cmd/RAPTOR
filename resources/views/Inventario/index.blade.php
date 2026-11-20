@@ -49,7 +49,7 @@
                         <th class="px-5 py-4 font-semibold">Inventario</th>
                         <th class="px-5 py-4 font-semibold">Cliente</th>
                         <th class="px-5 py-4 font-semibold">Fecha de recepción</th>
-                        <th class="px-5 py-4 font-semibold">Estado</th>
+                        <th class="px-5 py-4 font-semibold">Condición</th>
                         <th class="px-5 py-4 text-center font-semibold">Acciones</th>
                     </tr>
                 </thead>
@@ -115,20 +115,20 @@
                                 {{ $inventario->fecha_registro ?? '—' }}
                             </td>
 
-                            {{-- Estado --}}
+                            {{-- Condición general --}}
                             <td class="px-5 py-4">
 
-                                @if ($inventario->estado_inventario === 'pendiente')
-                                    <span class="inline-flex rounded-full bg-yellow-100 px-2.5 py-1 text-xs font-semibold text-yellow-700">
-                                        Pendiente
-                                    </span>
-                                @elseif ($inventario->estado_inventario === 'en_proceso')
-                                    <span class="inline-flex rounded-full bg-blue-100 px-2.5 py-1 text-xs font-semibold text-blue-700">
-                                        En proceso
-                                    </span>
-                                @elseif ($inventario->estado_inventario === 'finalizado')
+                                @if ($inventario->condicion_general === 'bueno')
                                     <span class="inline-flex rounded-full bg-green-100 px-2.5 py-1 text-xs font-semibold text-green-700">
-                                        Finalizado
+                                        Bueno
+                                    </span>
+                                @elseif ($inventario->condicion_general === 'regular')
+                                    <span class="inline-flex rounded-full bg-yellow-100 px-2.5 py-1 text-xs font-semibold text-yellow-700">
+                                        Regular
+                                    </span>
+                                @elseif ($inventario->condicion_general === 'malo')
+                                    <span class="inline-flex rounded-full bg-red-100 px-2.5 py-1 text-xs font-semibold text-red-700">
+                                        Malo
                                     </span>
                                 @else
                                     <span class="inline-flex rounded-full bg-slate-100 px-2.5 py-1 text-xs font-semibold text-slate-600">
@@ -446,33 +446,6 @@
                                                 @elseif ($inventario->condicion_general === 'malo')
                                                     <span class="inline-flex rounded-full bg-red-100 px-3 py-1 text-xs font-semibold text-red-700">
                                                         Malo
-                                                    </span>
-                                                @else
-                                                    <span class="inline-flex rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-600">
-                                                        Sin registrar
-                                                    </span>
-                                                @endif
-
-                                            </div>
-
-                                            {{-- Estado del inventario --}}
-                                            <div class="mb-5">
-
-                                                <h3 class="mb-3 text-sm font-bold uppercase tracking-wide text-slate-500">
-                                                    Estado del inventario
-                                                </h3>
-
-                                                @if ($inventario->estado_inventario === 'pendiente')
-                                                    <span class="inline-flex rounded-full bg-yellow-100 px-3 py-1 text-xs font-semibold text-yellow-700">
-                                                        Pendiente
-                                                    </span>
-                                                @elseif ($inventario->estado_inventario === 'en_proceso')
-                                                    <span class="inline-flex rounded-full bg-blue-100 px-3 py-1 text-xs font-semibold text-blue-700">
-                                                        En proceso
-                                                    </span>
-                                                @elseif ($inventario->estado_inventario === 'finalizado')
-                                                    <span class="inline-flex rounded-full bg-green-100 px-3 py-1 text-xs font-semibold text-green-700">
-                                                        Finalizado
                                                     </span>
                                                 @else
                                                     <span class="inline-flex rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-600">

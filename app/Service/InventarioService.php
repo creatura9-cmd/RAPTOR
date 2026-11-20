@@ -3,6 +3,7 @@
 namespace App\Service;
 
 use App\Repository\InventarioRepository;
+use Illuminate\Validation\ValidationException;
 
 class InventarioService
 {
@@ -23,6 +24,11 @@ class InventarioService
         return $this->inventario_repository->listarMotos();
     }
 
+    public function listarMotosDisponibles()
+    {
+        return $this->inventario_repository->listarMotosDisponibles();
+    }
+
     public function listarMecanicos()
     {
         return $this->inventario_repository->listarMecanicos();
@@ -30,8 +36,12 @@ class InventarioService
 
     public function store(array $datos)
     {
-        if ($datos['estado_inventario'] !== 'finalizado') {
-            $datos['condicion_general'] = null;
+        $idMoto = (int) $datos['id_moto'];
+
+        if (!$this->inventario_repository->motoPuedeIngresar($idMoto)) {
+            throw ValidationException::withMessages([
+                'id_moto' => 'Esta motocicleta todavía tiene una recepción pendiente de entrega.',
+            ]);
         }
 
         return $this->inventario_repository->store($datos);
@@ -44,15 +54,17 @@ class InventarioService
 
     public function update(int $id, array $datos)
     {
-        if ($datos['estado_inventario'] !== 'finalizado') {
-            $datos['condicion_general'] = null;
-        }
-
         $this->inventario_repository->update($id, $datos);
     }
 
     public function destroy(int $id)
     {
-        $this->inventario_repository->destroy($id);
+        if ($this->inventario_repository->tieneRelaciones($id)) {
+            throw ValidationException::withMessages([
+                'error' => 'No se puede eliminar este inventario porque tiene diagnósticos u órdenes de trabajo relacionados.',
+            ]);
+        }
+
+        return $this->inventario_repository->destroy($id);
     }
 }

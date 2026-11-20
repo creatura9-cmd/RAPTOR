@@ -49,7 +49,6 @@
                         <th class="px-5 py-4 font-semibold">Diagnóstico</th>
                         <th class="px-5 py-4 font-semibold">Motocicleta</th>
                         <th class="px-5 py-4 font-semibold">Placa</th>
-                        <th class="px-5 py-4 font-semibold">Estado</th>
                         <th class="px-5 py-4 text-center font-semibold">Acciones</th>
                     </tr>
                 </thead>
@@ -111,33 +110,6 @@
                             <td class="px-5 py-4 text-slate-600">
                                 {{ $diagnostico->inventario?->moto?->placa ?? 'No registrada' }}
                             </td>
-
-                            {{-- Estado --}}
-                            <td class="px-5 py-4">
-
-                                @if ($diagnostico->estado === 'pendiente')
-                                    <span class="inline-flex rounded-full bg-yellow-100 px-3 py-1 text-xs font-semibold text-yellow-800">
-                                        Pendiente
-                                    </span>
-
-                                @elseif ($diagnostico->estado === 'en_proceso')
-                                    <span class="inline-flex rounded-full bg-blue-100 px-3 py-1 text-xs font-semibold text-blue-800">
-                                        En proceso
-                                    </span>
-
-                                @elseif ($diagnostico->estado === 'finalizado')
-                                    <span class="inline-flex rounded-full bg-green-100 px-3 py-1 text-xs font-semibold text-green-800">
-                                        Finalizado
-                                    </span>
-
-                                @else
-                                    <span class="inline-flex rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-600">
-                                        {{ $diagnostico->estado ?: 'Sin estado' }}
-                                    </span>
-                                @endif
-
-                            </td>
-
                             {{-- Acciones --}}
                             <td class="px-5 py-4">
                                 <div class="flex items-center justify-center gap-2">
@@ -365,34 +337,6 @@
                                                             : 'No asignado' }}
                                                     </p>
                                                 </div>
-
-                                                {{-- Estado --}}
-                                                <div class="rounded-xl border border-[#dce8ed] p-4">
-                                                    <p class="text-xs font-medium text-slate-400">
-                                                        Estado
-                                                    </p>
-
-                                                    <div class="mt-2">
-                                                        @if ($diagnostico->estado === 'pendiente')
-                                                            <span class="inline-flex rounded-full bg-yellow-100 px-3 py-1 text-xs font-semibold text-yellow-800">
-                                                                Pendiente
-                                                            </span>
-                                                        @elseif ($diagnostico->estado === 'en_proceso')
-                                                            <span class="inline-flex rounded-full bg-blue-100 px-3 py-1 text-xs font-semibold text-blue-800">
-                                                                En proceso
-                                                            </span>
-                                                        @elseif ($diagnostico->estado === 'finalizado')
-                                                            <span class="inline-flex rounded-full bg-green-100 px-3 py-1 text-xs font-semibold text-green-800">
-                                                                Finalizado
-                                                            </span>
-                                                        @else
-                                                            <span class="inline-flex rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-600">
-                                                                {{ $diagnostico->estado ?: 'Sin estado' }}
-                                                            </span>
-                                                        @endif
-                                                    </div>
-                                                </div>
-
                                                 {{-- Fecha --}}
                                                 <div class="rounded-xl border border-[#dce8ed] p-4 sm:col-span-2">
                                                     <p class="text-xs font-medium text-slate-400">

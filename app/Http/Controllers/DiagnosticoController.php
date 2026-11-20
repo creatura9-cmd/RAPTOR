@@ -73,6 +73,6 @@ class DiagnosticoController extends Controller
 
         return redirect()
             ->route('diagnostico.index')
-            ->with('destroy', 'Diagnóstico eliminado correctamente');
+            ->with('error', 'No se puede eliminar este diagnóstico porque está relacionado con otros registros y áreas del sistema.');
     }
 }

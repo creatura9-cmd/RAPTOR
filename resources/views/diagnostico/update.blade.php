@@ -143,50 +143,6 @@
                     </p>
                 @enderror
             </div>
-
-            {{-- Estado --}}
-            <div>
-                <label
-                    for="estado"
-                    class="mb-1 block text-sm font-medium text-slate-700">
-                    Estado del diagnóstico
-                </label>
-
-                <select
-                    name="estado"
-                    id="estado"
-                    required
-                    class="w-full rounded-lg border border-slate-300 px-4 py-2.5 text-sm focus:border-[#315A72] focus:outline-none focus:ring-1 focus:ring-[#315A72]">
-
-                    <option value="pendiente"
-                        {{ old('estado', $diagnostico->estado) == 'pendiente' ? 'selected' : '' }}>
-                        Pendiente
-                    </option>
-
-                    <option value="en_proceso"
-                        {{ old('estado', $diagnostico->estado) == 'en_proceso' ? 'selected' : '' }}>
-                        En proceso
-                    </option>
-
-                    <option value="finalizado"
-                        {{ old('estado', $diagnostico->estado) == 'finalizado' ? 'selected' : '' }}>
-                        Finalizado
-                    </option>
-
-                    <option value="cancelado"
-                        {{ old('estado', $diagnostico->estado) == 'cancelado' ? 'selected' : '' }}>
-                        Cancelado
-                    </option>
-
-                </select>
-
-                @error('estado')
-                    <p class="mt-1 text-sm text-red-600">
-                        {{ $message }}
-                    </p>
-                @enderror
-            </div>
-
         </form>
 
     </div>

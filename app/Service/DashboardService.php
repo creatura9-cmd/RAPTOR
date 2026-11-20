@@ -32,7 +32,6 @@ class DashboardService
         return [
             'estadisticas' => $estadisticas,
             'ordenesPorEstado' => $this->dashboardRepository->obtenerOrdenesPorEstado(),
-            'diagnosticosPorEstado' => $this->dashboardRepository->obtenerDiagnosticosPorEstado(),
             'preordenesPorEstado' => $this->dashboardRepository->obtenerPreordenesPorEstado(),
             'recepciones' => $this->dashboardRepository->obtenerRecepciones(),
             'seguimientos' => $seguimientos,

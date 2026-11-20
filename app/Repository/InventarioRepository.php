@@ -25,6 +25,52 @@ class InventarioRepository
             ->get();
     }
 
+    public function listarMotosDisponibles()
+    {
+        return Moto::with(['cliente', 'marca'])
+            ->whereDoesntHave('inventarios', function ($query) {
+
+                // Revisar únicamente la última recepción de la moto.
+                $query->whereRaw(
+                    'inventario.id = (
+                        SELECT MAX(ultimo.id)
+                        FROM inventario AS ultimo
+                        WHERE ultimo.id_moto = inventario.id_moto
+                    )'
+                );
+
+                // La última recepción debe tener una Orden de Trabajo
+                // con una Entrega registrada para considerarse cerrada.
+                $query->whereDoesntHave('ordenTrabajo', function ($orden) {
+                    $orden->whereHas('entrega');
+                });
+
+            })
+            ->orderBy('placa')
+            ->get();
+    }
+
+    public function motoPuedeIngresar(int $idMoto): bool
+    {
+        return Moto::whereKey($idMoto)
+            ->whereDoesntHave('inventarios', function ($query) {
+
+                $query->whereRaw(
+                    'inventario.id = (
+                        SELECT MAX(ultimo.id)
+                        FROM inventario AS ultimo
+                        WHERE ultimo.id_moto = inventario.id_moto
+                    )'
+                );
+
+                $query->whereDoesntHave('ordenTrabajo', function ($orden) {
+                    $orden->whereHas('entrega');
+                });
+
+            })
+            ->exists();
+    }
+
     public function listarMecanicos()
     {
         return Mecanico::orderBy('apellido')
@@ -64,8 +110,18 @@ class InventarioRepository
         $inventario->update($datos);
     }
 
+    public function tieneRelaciones(int $id): bool
+    {
+        $inventario = Inventario::findOrFail($id);
+
+        return $inventario->diagnosticos()->exists()
+            || $inventario->ordenTrabajo()->exists();
+    }
+
     public function destroy(int $id)
     {
-        Inventario::destroy($id);
+        $inventario = Inventario::findOrFail($id);
+
+        return $inventario->delete();
     }
 }

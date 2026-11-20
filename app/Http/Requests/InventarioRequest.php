@@ -36,14 +36,8 @@ class InventarioRequest extends FormRequest
                 'date',
             ],
 
-            'estado_inventario' => [
-                'required',
-                'in:pendiente,en_proceso,finalizado',
-            ],
-
             'condicion_general' => [
-                'exclude_unless:estado_inventario,finalizado',
-                'required_if:estado_inventario,finalizado',
+                'required',
                 'in:bueno,regular,malo',
             ],
         ];
@@ -65,11 +59,8 @@ class InventarioRequest extends FormRequest
             'fecha_registro.required' => 'La fecha de registro es obligatoria.',
             'fecha_registro.date' => 'La fecha de registro no es válida.',
 
-            'condicion_general.required_if' => 'La condición general es obligatoria cuando el inventario está finalizado.',
+            'condicion_general.required' => 'La condición general es obligatoria.',
             'condicion_general.in' => 'La condición general seleccionada no es válida.',
-
-            'estado_inventario.required' => 'El estado del inventario es obligatorio.',
-            'estado_inventario.in' => 'El estado del inventario seleccionado no es válido.',
         ];
     }
 }

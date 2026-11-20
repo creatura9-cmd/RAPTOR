@@ -19,15 +19,7 @@ class PreordenRepository
     public function listarDiagnosticosDisponibles()
     {
         return Diagnostico::with('inventario.moto')
-            ->where('estado', 'finalizado')
             ->whereDoesntHave('preordenes')
-            ->get();
-    }
-
-    public function listarDiagnosticosFinalizados()
-    {
-        return Diagnostico::with('inventario.moto')
-            ->where('estado', 'finalizado')
             ->get();
     }
 
@@ -75,6 +67,15 @@ class PreordenRepository
         $preorden->update($datos);
 
         return $preorden;
+    }
+
+    public function tieneRelaciones(int $id): bool
+    {
+        $preorden = Preorden::findOrFail($id);
+
+        return $preorden->repuestos()->exists()
+            || $preorden->ordenTrabajo()->exists()
+            || $preorden->pagos()->exists();
     }
 
     public function destroy(int $id)

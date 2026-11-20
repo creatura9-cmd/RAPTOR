@@ -25,10 +25,7 @@ class PreordenController extends Controller
 
     public function create()
     {
-        $diagnosticos = Diagnostico::with('inventario.moto')
-            ->where('estado', 'finalizado')
-            ->whereDoesntHave('preordenes')
-            ->get();
+        $diagnosticos = $this->preordenService->listarDiagnosticosDisponibles();
 
         $idPreorden = request()->query('id_preorden');
 
@@ -82,11 +79,17 @@ class PreordenController extends Controller
 
     public function destroy(int $id)
     {
-        $this->preordenService->destroy($id);
+        try {
+            $this->preordenService->destroy($id);
 
-        return redirect()
-            ->route('preorden.index')
-            ->with('destroy', 'Preorden eliminada correctamente');
+            return redirect()
+                ->route('preorden.index')
+                ->with('destroy', 'Preorden eliminada correctamente');
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return redirect()
+                ->route('preorden.index')
+                ->with('error', $e->errors()['error'][0] ?? 'No se pudo eliminar la preorden.');
+        }
     }
 
     public function aprobar(int $id)

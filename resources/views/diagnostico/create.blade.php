@@ -156,58 +156,6 @@
                 @enderror
 
             </div>
-
-            {{-- Estado --}}
-            <div class="mb-6">
-
-                <label for="estado"
-                       class="block text-sm font-medium text-gray-700 mb-1">
-
-                    Estado
-
-                </label>
-
-                <select name="estado"
-                        id="estado"
-                        class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-primary-500 focus:border-primary-500"
-                        required>
-
-                    <option value="">
-                        Seleccione un estado
-                    </option>
-
-                    <option value="pendiente"
-                        {{ old('estado') == 'pendiente' ? 'selected' : '' }}>
-                        Pendiente
-                    </option>
-
-                    <option value="en_proceso"
-                        {{ old('estado') == 'en_proceso' ? 'selected' : '' }}>
-                        En proceso
-                    </option>
-
-                    <option value="finalizado"
-                        {{ old('estado') == 'finalizado' ? 'selected' : '' }}>
-                        Finalizado
-                    </option>
-
-                    <option value="cancelado"
-                        {{ old('estado') == 'cancelado' ? 'selected' : '' }}>
-                        Cancelado
-                    </option>
-
-                </select>
-
-                @error('estado')
-
-                    <p class="text-red-600 text-sm mt-1">
-                        {{ $message }}
-                    </p>
-
-                @enderror
-
-            </div>
-
             {{-- Botones --}}
             <div class="flex items-center justify-end gap-3">
 
