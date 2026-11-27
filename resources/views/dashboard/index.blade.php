@@ -167,8 +167,8 @@
                 'titulo' => 'Administración del sistema',
                 'descripcion' => 'Consulta los registros de apoyo para la operación y la organización del taller.',
                 'tarjetas' => [
-                    ['titulo' => 'Mecánicos registrados', 'valor' => $estadisticas['mecanicos'], 'icono' => 'users', 'ruta' => ['mecanico.index']],
-                    ['titulo' => 'Repuestos registrados', 'valor' => $estadisticas['repuestos'], 'icono' => 'box', 'ruta' => ['repuesto.index']],
+                    ['titulo' => 'Mecánicos registrados', 'valor' => $estadisticas['mecanicos'], 'icono' => 'user-cog', 'ruta' => ['mecanico.index']],
+                    ['titulo' => 'Repuestos registrados', 'valor' => $estadisticas['repuestos'], 'icono' => 'tool-case', 'ruta' => ['repuesto.index']],
                     ['titulo' => 'Marcas de motocicleta', 'valor' => $estadisticas['marcas'], 'icono' => 'motorcycle', 'ruta' => ['marca_moto.index']],
                 ],
             ],

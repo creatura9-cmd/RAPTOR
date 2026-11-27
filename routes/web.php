@@ -184,6 +184,11 @@ Route::middleware(['auth', 'role:administrador'])->group(function () {
     Route::get('historial', [HistorialController::class, 'index'])
         ->name('historial.index');
 
+    Route::get('historial/cliente/{idCliente}/pdf', [
+        HistorialController::class,
+        'descargarHistorialCliente',
+    ])->name('historial.cliente.pdf');
+
     Route::get('historial/moto/{idMoto}/pdf', [HistorialController::class, 'descargarHistorialMoto'])
         ->name('historial.moto.pdf');
 

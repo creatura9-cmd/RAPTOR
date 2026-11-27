@@ -37,7 +37,7 @@
 
             <td class="etiqueta">Correo:</td>
             <td>
-                {{ $cliente?->correo ?? 'No disponible' }}
+                {{ $cliente?->correo_electronico ?: 'No disponible' }}
             </td>
         </tr>
 

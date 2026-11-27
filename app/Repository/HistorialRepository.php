@@ -127,4 +127,49 @@ class HistorialRepository
             ->whereHas('entrega')
             ->find($id);
     }
+
+
+    /**
+     * Obtener un cliente con todas sus motocicletas
+     * y sus servicios finalizados y entregados.
+     */
+    public function obtenerClienteConHistorial(int $idCliente): ?Cliente
+    {
+        return Cliente::with([
+            'motos' => function ($query) {
+                $query->with([
+                    'marca',
+                    'inventarios' => function ($inventario) {
+                        $inventario->whereHas('ordenTrabajo', function ($orden) {
+                            $orden->where('estado', 'finalizada')
+                                ->whereHas('entrega');
+                        })->with([
+                            'moto.cliente',
+                            'moto.marca',
+                            'diagnosticos',
+                            'ordenTrabajo' => function ($orden) {
+                                $orden->where('estado', 'finalizada')
+                                    ->whereHas('entrega')
+                                    ->with([
+                                        'inventario.moto.cliente',
+                                        'inventario.moto.marca',
+                                        'inventario.diagnosticos',
+                                        'preorden.diagnostico.inventario.moto.cliente',
+                                        'preorden.diagnostico.inventario.moto.marca',
+                                        'preorden.repuestos.repuesto',
+                                        'preorden.pagos',
+                                        'mecanico',
+                                        'pagos',
+                                        'entrega',
+                                    ]);
+                            },
+                        ]);
+                    },
+                ]);
+            },
+        ])
+            ->whereKey($idCliente)
+            ->first();
+    }
+
 }

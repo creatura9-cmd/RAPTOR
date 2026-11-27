@@ -137,20 +137,18 @@
                                         </div>
 
                                         <div class="ml-auto sm:ml-2">
-                                            @if ($datosCliente['cliente']->motos->isNotEmpty())
-                                                <a
-                                                    href="{{ route('historial.moto.pdf', $datosCliente['cliente']->motos->first()->id) }}"
-                                                    target="_blank"
-                                                    class="inline-flex items-center justify-center gap-1.5 whitespace-nowrap rounded-lg bg-[#315A72] px-3 py-2 text-xs font-semibold text-white transition hover:bg-[#294c61]"
-                                                >
-                                                    <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"
-                                                            d="M12 3v12m0 0 4-4m-4 4-4-4M4 17v3h16v-3"/>
-                                                    </svg>
+                                            <a
+                                                href="{{ route('historial.cliente.pdf', ['idCliente' => $datosCliente['cliente']->id]) }}"
+                                                target="_blank"
+                                                class="inline-flex items-center justify-center gap-1.5 whitespace-nowrap rounded-lg bg-[#315A72] px-3 py-2 text-xs font-semibold text-white transition hover:bg-[#294c61]"
+                                            >
+                                                <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"
+                                                        d="M12 3v12m0 0 4-4m-4 4-4-4M4 17v3h16v-3"/>
+                                                </svg>
 
-                                                    PDF historial moto
-                                                </a>
-                                            @endif
+                                                PDF historial del cliente
+                                            </a>
                                         </div>
 
                                     </div>

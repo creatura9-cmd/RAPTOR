@@ -27,6 +27,23 @@ class HistorialController extends Controller
     }
 
     /**
+     * Mostrar el PDF del historial completo de un cliente.
+     */
+    public function descargarHistorialCliente(int $idCliente)
+    {
+        $pdf = $this->historialService
+            ->generarPdfHistorialCliente($idCliente);
+
+        if (!$pdf) {
+            abort(404, 'El cliente no tiene servicios registrados en el historial.');
+        }
+
+        return $pdf->stream(
+            'RAPTOR-historial-cliente-'.$idCliente.'.pdf'
+        );
+    }
+
+    /**
      * Mostrar el PDF consolidado de una motocicleta.
      */
     public function descargarHistorialMoto(int $idMoto)

@@ -191,6 +191,43 @@ class HistorialService
         });
     }
 
+
+    /**
+     * Generar el PDF del historial completo de un cliente.
+     */
+    public function generarPdfHistorialCliente(int $idCliente)
+    {
+        $cliente = $this->historialRepository
+            ->obtenerClienteConHistorial($idCliente);
+
+        if (!$cliente) {
+            return null;
+        }
+
+        $servicios = $cliente->motos->flatMap(
+            fn ($moto) => $moto->inventarios->flatMap(
+                fn ($inventario) => $inventario->ordenTrabajo
+            )
+        )->sortByDesc('fecha_fin')->values();
+
+        if ($servicios->isEmpty()) {
+            return null;
+        }
+        $servicios = new Collection($servicios->all());
+
+        $serviciosPreparados = $this->prepararServiciosParaPdf($servicios);
+
+        return Pdf::loadView(
+            'historial.pdf.todos',
+            [
+                'cliente' => $cliente,
+                'motos' => $cliente->motos,
+                'servicios' => $serviciosPreparados,
+            ]
+        )->setPaper('a4', 'landscape');
+    }
+
+
     /**
      * Generar el PDF de un servicio específico.
      */

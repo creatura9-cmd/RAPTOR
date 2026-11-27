@@ -55,6 +55,13 @@
             </tr>
 
             <tr>
+                <td class="etiqueta">Correo:</td>
+                <td class="valor" colspan="3">
+                    {{ $cliente?->correo_electronico ?: 'No disponible' }}
+                </td>
+            </tr>
+
+            <tr>
                 <td class="etiqueta">Motocicleta:</td>
                 <td class="valor">
                     {{ $moto?->marca?->nombre_marca ?? 'No disponible' }}
